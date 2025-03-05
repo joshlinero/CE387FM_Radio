@@ -10,6 +10,7 @@ localparam string FILE_I_OUT_NAME = "../source/src/out_files/read_iq_i_out.txt";
 localparam string FILE_Q_OUT_NAME = "../source/src/out_files/read_iq_q_out.txt";
 
 localparam CLOCK_PERIOD = 10;
+localparam DATA_SIZE = 32;
 
 logic clock = 1'b1;
 logic reset = '0;
@@ -25,14 +26,14 @@ localparam NUMBER_OF_INPUTS = 32000;
 
 logic i_out_empty, q_out_empty;
 logic i_out_rd_en, q_out_rd_en;
-logic signed [31:0] i_out_data, q_out_data;
+logic signed [DATA_SIZE-1:0] i_out_data, q_out_data;
 
 logic in_full;
 logic in_wr_en;
 logic signed [7:0] data_in;
 
 read_iq_top #(
-    .DATA_SIZE(32),
+    .DATA_SIZE(DATA_SIZE),
     .BYTE_SIZE(8),
     .CHAR_SIZE(16),
     .BITS(10)
@@ -105,7 +106,7 @@ initial begin : read_data_process
 end
 
 initial begin : data_write_process
-    logic signed [31:0] i_cmp_out, q_cmp_out;
+    logic signed [DATA_SIZE-1:0] i_cmp_out, q_cmp_out;
     int i, j, k;
     int i_out_file, q_out_file;
     int i_cmp_file, q_cmp_file;
@@ -127,7 +128,7 @@ initial begin : data_write_process
         if (!i_out_empty && !q_out_empty) begin
             i_out_rd_en = 1'b1;
             q_out_rd_en = 1'b1;
-            j = $fscanf(i_cmp_file, "%8x", i_cmp_out);
+            j = $fscanf(i_cmp_file, "%08x", i_cmp_out);
             k = $fscanf(q_cmp_file, "%08x", q_cmp_out);
             $fwrite(i_out_file, "%08x\n", i_out_data);
             $fwrite(q_out_file, "%08x\n", q_out_data);

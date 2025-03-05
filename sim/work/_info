@@ -10,10 +10,10 @@ z2
 cModel Technology
 Z0 d/home/jml8363/ce387/Final_Project/sim
 T_opt
-Z1 !s110 1741195387
-VJTU:XFf?`8m^GgE3:FcHe2
+Z1 !s110 1741195924
+V3nPWmZ2m4i?2:cl[bJPR20
 04 10 4 work read_iq_tb fast 0
-=1-a4bb6d3fcf6e-67c8887b-a2cc9-1e905
+=1-a4bb6d3fcf6e-67c88a94-c5173-23027
 o-quiet -auto_acc_if_foreign -work work -L work +acc
 Z2 tCvgOpt 0
 n@_opt
@@ -31,13 +31,13 @@ R0
 w1741025888
 8../sv/fifo.sv
 F../sv/fifo.sv
-!i122 8
+!i122 20
 L0 2 77
 Z6 OL;L;2020.1;71
 r1
 !s85 0
 31
-Z7 !s108 1741195387.000000
+Z7 !s108 1741195924.000000
 !s107 ../sv/fifo.sv|
 !s90 -reportprogress|300|-work|work|../sv/fifo.sv|
 !i113 0
@@ -47,16 +47,16 @@ vread_iq
 R3
 R1
 !i10b 1
-!s100 Lz>hXNZLl<9KEzZEV:h9i1
+!s100 ?KnVz8K^ibR_C:43HkEOb3
 R4
-I;09mMoWk:7Ul9WJ4IF2cR0
+Ia[n4:?a[m1Qd8<3de?c>R2
 R5
 S1
 R0
-w1741195274
+w1741195919
 8../sv/read_iq.sv
 F../sv/read_iq.sv
-!i122 9
+!i122 21
 L0 2 124
 R6
 r1
@@ -72,17 +72,17 @@ vread_iq_tb
 R3
 R1
 !i10b 1
-!s100 TND7MK6R<JdOof?>V0o590
+!s100 oi`XNQXfWBmSfN5aCbKVJ2
 R4
-I3CC:91E31`TM@zQ?K<kXN2
+IEoaDM8zCUTLGR2czZnn2R1
 R5
 S1
 R0
-w1741195378
+w1741195824
 8../sv/read_iq_tb.sv
 F../sv/read_iq_tb.sv
-!i122 11
-L0 4 154
+!i122 23
+L0 4 155
 R6
 r1
 !s85 0
@@ -97,16 +97,16 @@ vread_iq_top
 R3
 R1
 !i10b 1
-!s100 L8L8cPFohXC92a;?6LNZO3
+!s100 0EA6^AnnXmf;R`Ch@dLhT2
 R4
-Ij0PZ9AS]5H_>bHDnb_Mkd2
+Ic^z:HjmV`M42Pb<[Yj[YO2
 R5
 S1
 R0
-w1741112557
+w1741195840
 8../sv/read_iq_top.sv
 F../sv/read_iq_top.sv
-!i122 10
+!i122 22
 L0 2 109
 R6
 r1

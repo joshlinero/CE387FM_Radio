@@ -30,8 +30,8 @@ logic         in_empty;
 
 // Signals from read_iq to the output FIFOs:
 logic         out_wr_en;
-logic  [DATA_SIZE-1:0] i_out;
-logic  [DATA_SIZE-1:0] q_out;
+logic signed [DATA_SIZE-1:0] i_out;
+logic signed [DATA_SIZE-1:0] q_out;
 
 // Full flags from the output FIFOs fed back to read_iq:
 logic         i_out_full;

@@ -27,10 +27,10 @@ function logic signed [DATA_SIZE-1:0] QUANTIZE(logic signed [DATA_SIZE-1:0] val)
     QUANTIZE = DATA_SIZE'(val << BITS);
 endfunction
 
-logic [BYTE_SIZE-1:0] i_low, q_low;
-logic [BYTE_SIZE-1:0] i_low_c, q_low_c;
-logic [CHAR_SIZE-1:0] i_sample, q_sample;
-logic [CHAR_SIZE-1:0] i_sample_c, q_sample_c;
+logic signed [BYTE_SIZE-1:0] i_low, q_low;
+logic signed [BYTE_SIZE-1:0] i_low_c, q_low_c;
+logic signed [CHAR_SIZE-1:0] i_sample, q_sample;
+logic signed [CHAR_SIZE-1:0] i_sample_c, q_sample_c;
 
 typedef enum logic [2:0] {
     READ_I_LOW,   // Read I low byte (IQ[i*4+0])
@@ -102,8 +102,8 @@ always_comb begin
             if (i_out_full == 1'b0 && q_out_full == 1'b0) begin
                 out_wr_en = 1'b1;
                 in_rd_en = 1'b0;
-                i_out = QUANTIZE(i_sample);    
-                q_out = QUANTIZE(q_sample);    
+                i_out = $signed(QUANTIZE(i_sample));    
+                q_out = $signed(QUANTIZE(q_sample));    
                 next_state = READ_I_LOW;
             end else begin
                 next_state = WRITE;
