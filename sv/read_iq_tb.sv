@@ -127,8 +127,8 @@ initial begin : data_write_process
         if (!i_out_empty && !q_out_empty) begin
             i_out_rd_en = 1'b1;
             q_out_rd_en = 1'b1;
-            j = $fscanf(i_cmp_file, "%h", i_cmp_out);
-            k = $fscanf(q_cmp_file, "%h", q_cmp_out);
+            j = $fscanf(i_cmp_file, "%8x", i_cmp_out);
+            k = $fscanf(q_cmp_file, "%08x", q_cmp_out);
             $fwrite(i_out_file, "%08x\n", i_out_data);
             $fwrite(q_out_file, "%08x\n", q_out_data);
             if (i_cmp_out != i_out_data) begin

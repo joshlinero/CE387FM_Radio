@@ -1,0 +1,120 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.01, Jan 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/jml8363/ce387/Final_Project/sim
+T_opt
+Z1 !s110 1741195387
+VJTU:XFf?`8m^GgE3:FcHe2
+04 10 4 work read_iq_tb fast 0
+=1-a4bb6d3fcf6e-67c8887b-a2cc9-1e905
+o-quiet -auto_acc_if_foreign -work work -L work +acc
+Z2 tCvgOpt 0
+n@_opt
+OL;O;2020.1;71
+vfifo
+Z3 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
+R1
+!i10b 1
+!s100 JJ9WTn?^46FJn6Sib6ECo1
+Z4 !s11b Dg1SIo80bB@j0V0VzS_@n1
+Ij:[k:a4XRZ6Im<1oU4m=41
+Z5 VDg1SIo80bB@j0V0VzS_@n1
+S1
+R0
+w1741025888
+8../sv/fifo.sv
+F../sv/fifo.sv
+!i122 8
+L0 2 77
+Z6 OL;L;2020.1;71
+r1
+!s85 0
+31
+Z7 !s108 1741195387.000000
+!s107 ../sv/fifo.sv|
+!s90 -reportprogress|300|-work|work|../sv/fifo.sv|
+!i113 0
+Z8 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R2
+vread_iq
+R3
+R1
+!i10b 1
+!s100 Lz>hXNZLl<9KEzZEV:h9i1
+R4
+I;09mMoWk:7Ul9WJ4IF2cR0
+R5
+S1
+R0
+w1741195274
+8../sv/read_iq.sv
+F../sv/read_iq.sv
+!i122 9
+L0 2 124
+R6
+r1
+!s85 0
+31
+R7
+!s107 ../sv/read_iq.sv|
+!s90 -reportprogress|300|-work|work|../sv/read_iq.sv|
+!i113 0
+R8
+R2
+vread_iq_tb
+R3
+R1
+!i10b 1
+!s100 TND7MK6R<JdOof?>V0o590
+R4
+I3CC:91E31`TM@zQ?K<kXN2
+R5
+S1
+R0
+w1741195378
+8../sv/read_iq_tb.sv
+F../sv/read_iq_tb.sv
+!i122 11
+L0 4 154
+R6
+r1
+!s85 0
+31
+R7
+!s107 ../sv/read_iq_tb.sv|
+!s90 -reportprogress|300|-work|work|../sv/read_iq_tb.sv|
+!i113 0
+R8
+R2
+vread_iq_top
+R3
+R1
+!i10b 1
+!s100 L8L8cPFohXC92a;?6LNZO3
+R4
+Ij0PZ9AS]5H_>bHDnb_Mkd2
+R5
+S1
+R0
+w1741112557
+8../sv/read_iq_top.sv
+F../sv/read_iq_top.sv
+!i122 10
+L0 2 109
+R6
+r1
+!s85 0
+31
+R7
+!s107 ../sv/read_iq_top.sv|
+!s90 -reportprogress|300|-work|work|../sv/read_iq_top.sv|
+!i113 0
+R8
+R2

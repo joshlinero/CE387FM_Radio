@@ -23,8 +23,8 @@ module read_iq #(
     output  logic [DATA_SIZE-1:0]           q_out
 );
 
-function logic signed [DATA_SIZE-1:0] QUANTIZE(logic signed [DATA_SIZE-1:0] sample);
-    QUANTIZE = DATA_SIZE'(sample << BITS);
+function logic signed [DATA_SIZE-1:0] QUANTIZE(logic signed [DATA_SIZE-1:0] val);
+    QUANTIZE = DATA_SIZE'(val << BITS);
 endfunction
 
 logic [BYTE_SIZE-1:0] i_low, q_low;
@@ -77,7 +77,7 @@ always_comb begin
         READ_I_HIGH: begin
             if (in_empty == 1'b0) begin
                 in_rd_en = 1'b1;
-                i_sample_c <= {data_in, i_low};
+                i_sample_c = {data_in, i_low};
                 next_state = READ_Q_LOW;
             end
         end
