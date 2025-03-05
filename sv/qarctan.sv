@@ -17,7 +17,7 @@ const logic [DATA_SIZE-1:0] QUAD_ONE = 32'h00000324;
 const logic [DATA_SIZE-1:0] QUAD_THREE = 32'h0000096c;
 
 function logic signed [DATA_SIZE-1:0] DEQUANTIZE(logic signed [DATA_SIZE-1:0] val);
-    if (i < 0) begin
+    if (val < 0) begin
         DEQUANTIZE = DATA_SIZE'(-(-val >>> 10));
     end else begin
         DEQUANTIZE = DATA_SIZE'(val >>> 10);
@@ -61,7 +61,7 @@ logic [DATA_SIZE-1:0] quad_product_c, data_out_temp_c;
 
 always_ff @(posedge clock or posedge reset) begin
     if (reset == 1'b1) begin
-        state <= READY;
+        state <= INIT;
         quad_product <= '0;
         data_out_temp <= '0;
     end else begin
@@ -75,7 +75,7 @@ divider #(
     .DIVIDEND_WIDTH(DATA_SIZE*2),
     .DIVISOR_WIDTH(DATA_SIZE)
 ) divider_inst (
-    .clk(clk),
+    .clock(clock),
     .reset(reset),
     .start(div_start),
     .dividend(dividend),
@@ -155,7 +155,7 @@ always_comb begin
                 angle = ($signed(QUAD_THREE) - $signed(DEQUANTIZE(quad_product)));
 
             data_out_temp_c = ($signed(imag) < 0) ? -$signed(angle) : angle;
-            next_state = OUTPUT;
+            next_state = WRITE;
         end
 
         WRITE: begin
@@ -168,7 +168,7 @@ always_comb begin
             data_out = 'x;
             done_signal = 1'bx;
             quad_product_c = 'x;
-            start_div = 1'bx;
+            div_start = 1'bx;
             data_out_temp_c = 'x;
         end
 

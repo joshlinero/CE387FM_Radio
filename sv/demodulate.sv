@@ -1,7 +1,7 @@
 
 
 module demodulate #(
-    parameter DATA_SIZE = 32,
+    parameter DATA_SIZE = 32
 )(
     input   logic                   clock,
     input   logic                   reset,
@@ -22,7 +22,7 @@ module demodulate #(
 const logic [DATA_SIZE-1:0] gain = 32'h000002f6;
 
 function logic signed [DATA_SIZE-1:0] DEQUANTIZE(logic signed [DATA_SIZE-1:0] val);
-    if (i < 0) begin
+    if (val < 0) begin
         DEQUANTIZE = DATA_SIZE'(-(-val >>> 10));
     end else begin
         DEQUANTIZE = DATA_SIZE'(val >>> 10);
@@ -85,7 +85,7 @@ always_ff @(posedge clock or posedge reset) begin
         imag_real_product <= '0;
         demod_temp <= '0;
 
-        start_signal = 1'b0;
+        //start_qarctan = 1'b0;
 
     end else begin
         state <= next_state; 
@@ -129,7 +129,7 @@ always_comb begin
 
     //demod_out = demod_temp;
 
-    start_signal = 1'b0;
+    start_qarctan = 1'b0;
 
     case(state)
 
@@ -194,7 +194,7 @@ always_comb begin
             imag_imag_product_c = 'x;
             real_imag_product_c = 'x;
             imag_real_product_c = 'x;
-            start_signal = 1'bx;
+            start_qarctan = 1'bx;
         end
 
     endcase

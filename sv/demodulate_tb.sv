@@ -3,12 +3,13 @@
 module demodulate_tb;
 
 /* files */
-localparam string IN_IMAG_FILE_NAME = "../source/src/txt_files/fir_cmplx_imag_out.txt";
-localparam string IN_REAL_FILE_NAME = "../source/src/txt_files/fir_cmplx_real_out.txt";
+localparam string IN_IMAG_FILE_NAME = "../source/src/txt_files/fir_cmplx_imag_cmp.txt";
+localparam string IN_REAL_FILE_NAME = "../source/src/txt_files/fir_cmplx_real_cmp.txt";
 localparam string OUT_FILE_NAME = "../source/src/out_files/demodulate_out.txt";
 localparam string CMP_FILE_NAME = "../source/src/txt_files/demodulate_cmp.txt";
 
-localparam int CLOCK_PERIOD = 10;
+localparam CLOCK_PERIOD = 10;
+localparam DATA_SIZE = 32;
 
 logic clock, reset;
 
@@ -29,7 +30,7 @@ logic in_write_done = '0;
 integer out_errors = 0;
 
 demodulate_top #(
-    .DATA_SIZE(32)
+    .DATA_SIZE(DATA_SIZE)
 ) demodulate_top_inst (
     .clock(clock),
     .reset(reset),
@@ -45,17 +46,17 @@ demodulate_top #(
 );
 
 always begin
-    clk = 1'b0;
+    clock = 1'b0;
     #(CLOCK_PERIOD/2);
-    clk = 1'b1;
+    clock = 1'b1;
     #(CLOCK_PERIOD/2);
 end
 
 /* reset */
 initial begin
-    @(posedge clk);
+    @(posedge clock);
     reset = 1'b1;
-    @(posedge clk);
+    @(posedge clock);
     reset = 1'b0;
 end
 
@@ -63,12 +64,12 @@ initial begin : tb_process
     longint unsigned start_time, end_time;
 
     @(negedge reset);
-    @(posedge clk);
+    @(posedge clock);
     start_time = $time;
 
     // start
     $display("@ %0t: Beginning simulation...", start_time);
-    @(posedge clk);
+    @(posedge clock);
 
     wait(out_rd_done && in_write_done);
     end_time = $time;
@@ -97,8 +98,8 @@ initial begin : read_process
     i = 0;
 
     // Read data from input angles text file
-    while ( i < 50 ) begin
-        @(negedge clk);
+    while ( i < 1000 ) begin
+        @(negedge clock);
         if (real_full == 1'b0 && imag_full == 1'b0) begin
             count = $fscanf(imag_in_file,"%h", imag_in);
             count = $fscanf(real_in_file,"%h", real_in);
@@ -111,7 +112,7 @@ initial begin : read_process
         end
     end
 
-    @(negedge clk);
+    @(negedge clock);
     real_wr_en = 1'b0;
     imag_wr_en = 1'b0;
     // $display("CLOSING IN FILE");
@@ -127,15 +128,15 @@ initial begin : comp_process
     int out_file;
 
     @(negedge reset);
-    @(posedge clk);
+    @(posedge clock);
 
     $display("@ %0t: Comparing file %s...", $time, CMP_FILE_NAME);
     out_file = $fopen(OUT_FILE_NAME, "wb");
     cmp_file = $fopen(CMP_FILE_NAME, "rb");
     data_out_rd_en = 1'b0;
     i = 0;
-    while (i < 50) begin
-        @(negedge clk);
+    while (i < 1000) begin
+        @(negedge clock);
         data_out_rd_en = 1'b0;
         if (data_out_empty == 1'b0) begin
             data_out_rd_en = 1'b1;
@@ -150,7 +151,7 @@ initial begin : comp_process
         end 
     end
 
-    @(negedge clk);
+    @(negedge clock);
     data_out_rd_en = 1'b0;
     $display("CLOSING CMP FILE");
     $fclose(cmp_file);

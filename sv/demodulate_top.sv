@@ -1,6 +1,6 @@
 
 module demodulate_top #(
-    parameter DATA_SIZE = 16
+    parameter DATA_SIZE = 32
 ) (
     input   logic                   clock,
     input   logic                   reset,
@@ -63,7 +63,7 @@ fifo #(
 
 
 demodulate #(
-    .FIFO_DATA_WIDTH(DATA_SIZE)
+    .DATA_SIZE(DATA_SIZE)
 ) demodulate_inst (
     .clock(clock),
     .reset(reset),
