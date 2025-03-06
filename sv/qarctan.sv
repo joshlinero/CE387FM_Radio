@@ -128,16 +128,16 @@ always_comb begin
                 // Assign dividend and divisor 
                 if ($signed(real_) >= 0) begin
                     if ($signed(q_real_minus_imag) >= 0) begin
-                        dividend = {32'h0, q_real_minus_imag};
+                        dividend =  q_real_minus_imag;
                     end else begin
-                        dividend = {32'hffffffff, q_real_minus_imag};
+                        dividend = q_real_minus_imag;
                     end
                     divisor = real_plus_imag;
                 end else begin
                     if ($signed(q_real_plus_imag) >= 0) begin
-                        dividend = {32'h0, q_real_plus_imag};
+                        dividend = q_real_plus_imag;
                     end else begin
-                        dividend = {32'hffffffff, q_real_plus_imag}; 
+                        dividend = q_real_plus_imag; 
                     end
                     divisor = imag_minus_real;
                 end
