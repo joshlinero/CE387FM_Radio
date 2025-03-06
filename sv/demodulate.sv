@@ -29,19 +29,19 @@ function logic signed [DATA_SIZE-1:0] DEQUANTIZE(logic signed [DATA_SIZE-1:0] va
     end
 endfunction
 
-// function logic [DATA_WIDTH-1:] DEQUANTIZE(logic [DATA_WIDTH-1:0] v);
-//     logic signed [DATA_WIDTH-1:0] temp;
+// function logic [DATA_SIZE-1:0] DEQUANTIZE(logic [DATA_SIZE-1:0] v);
+//     logic signed [DATA_SIZE-1:0] temp;
 
-//     temp = $signed(v) + $signed(1 << (QUANT -1));
+//     temp = $signed(v) + $signed(1 << (10 -1));
 
-//     if (temp[DATA_WIDTH-1:0] == 1'b1 && $signed(temp) >= -$signed(1 << QUANT)) begin
+//     if (temp[DATA_SIZE-1:0] == 1'b1 && $signed(temp) >= -$signed(1 << 10)) begin
 //         return 0;
 //     end
 
-//     if (temp[DATA_WIDTH-1] == 1'b1) begin
-//         temp = $signed(temp) + $signed(1 << (QUANT));
+//     if (temp[DATA_SIZE-1] == 1'b1) begin
+//         temp = $signed(temp) + $signed(1 << (10));
 //     end
-//     return $signed(temp) >>> $signed(QUANT);
+//     return $signed(temp) >>> $signed(10);
 // endfunction
 
 
@@ -60,8 +60,8 @@ logic [DATA_SIZE-1:0] real_curr_c, imag_curr_c;
 logic [DATA_SIZE-1:0] real_last, imag_last;
 logic [DATA_SIZE-1:0] real_last_c, imag_last_c;
 
-logic [DATA_SIZE-1:0] real_real_product, imag_real_product, real_imag_product, imag_imag_product;
-logic [DATA_SIZE-1:0] real_real_product_c, imag_real_product_c, real_imag_product_c, imag_imag_product_c;
+logic [DATA_SIZE*2-1:0] real_real_product, imag_real_product, real_imag_product, imag_imag_product;
+logic [DATA_SIZE*2-1:0] real_real_product_c, imag_real_product_c, real_imag_product_c, imag_imag_product_c;
 logic [DATA_SIZE-1:0] qarctan_real, qarctan_imag;
 logic [DATA_SIZE-1:0] demod_temp, demod_temp_c;
 
@@ -109,7 +109,7 @@ qarctan #(
     .start_signal(start_qarctan),
     .real_(qarctan_real),
     .imag(qarctan_imag),
-    .data_out(qarctan_out),
+    .data_out(qarctan_output),
     .done_signal(qarctan_done)
 );
 
@@ -155,8 +155,8 @@ always_comb begin
         end
 
         QARCTAN: begin
-            qarctan_real = DEQUANTIZE(real_real_product) - DEQUANTIZE(imag_imag_product);
-            qarctan_imag = DEQUANTIZE(real_imag_product) + DEQUANTIZE(imag_real_product);
+            qarctan_real = DEQUANTIZE(real_real_product[DATA_SIZE-1:0]) - DEQUANTIZE(imag_imag_product);
+            qarctan_imag = DEQUANTIZE(real_imag_product[DATA_SIZE-1:0]) + DEQUANTIZE(imag_real_product);
             // Start qarctan 
             start_qarctan = 1'b1;
             next_state = GET_QARCTAN;
@@ -164,7 +164,7 @@ always_comb begin
 
         GET_QARCTAN: begin
             if (qarctan_done == 1'b1) begin
-                demod_temp_c = ($signed(qarctan_out) * $signed(gain));
+                demod_temp_c = ($signed(qarctan_output) * $signed(gain));
                 next_state = WRITE;
             end else
                 // wait for the qarctan to finish 

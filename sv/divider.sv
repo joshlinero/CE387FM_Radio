@@ -1,5 +1,5 @@
 module divider #(
-    parameter DIVIDEND_WIDTH = 64,
+    parameter DIVIDEND_WIDTH = 32,
     parameter DIVISOR_WIDTH  = 32
 ) (
     input  logic                         clock,
@@ -8,7 +8,7 @@ module divider #(
     input  logic [DIVIDEND_WIDTH-1:0]      dividend,
     input  logic [DIVISOR_WIDTH-1:0]       divisor,
     output logic [DIVIDEND_WIDTH-1:0]      quotient,
-    output logic [DIVIDEND_WIDTH-1:0]      remainder,
+    output logic [DIVISOR_WIDTH-1:0]      remainder,
     output logic                         done,
     output logic                         overflow
 );
@@ -50,7 +50,7 @@ module divider #(
     // Combinational logic: determine next state and next register values
     always_comb begin
         // Default assignments (hold current values)
-        next_state      = state;
+        //next_state      = state;
         dividend_next   = dividend_reg;
         quotient_next   = quotient_reg;
         remainder_next  = remainder_reg;

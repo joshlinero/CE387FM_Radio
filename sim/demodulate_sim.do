@@ -4,7 +4,7 @@ vmap work work
 
 # fm_radio architecture
 vlog -work work "../sv/fifo.sv"
-vlog -work work "../sv/divider.sv"
+vlog -work work "../sv/divider_work.sv"
 vlog -work work "../sv/qarctan.sv"
 vlog -work work "../sv/demodulate.sv"
 vlog -work work "../sv/demodulate_top.sv"
