@@ -5117,3 +5117,5 @@ do fir_complex_sim.do
 #    Time: 220065 ns  Iteration: 2  Instance: /fir_complex_tb
 # 1
 # Break in NamedBeginStat tb_process at ../sv/fir_complex_tb.sv line 113
+# End time: 14:59:19 on Mar 06,2025, Elapsed time: 0:13:49
+# Errors: 0, Warnings: 0

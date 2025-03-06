@@ -58,10 +58,10 @@ void fm_radio_stereo(unsigned char *IQ, int *left_audio, int *right_audio)
     read_IQ( IQ, I, Q, SAMPLES ); // finished
 
     // Channel low-pass filter cuts off all frequnties above 80 Khz
-    fir_cmplx_n( I, Q, SAMPLES, CHANNEL_COEFFS_REAL, CHANNEL_COEFFS_IMAG, fir_cmplx_x_real, fir_cmplx_x_imag, CHANNEL_COEFF_TAPS, 1, I_fir, Q_fir ); 
+    fir_cmplx_n( I, Q, SAMPLES, CHANNEL_COEFFS_REAL, CHANNEL_COEFFS_IMAG, fir_cmplx_x_real, fir_cmplx_x_imag, CHANNEL_COEFF_TAPS, 1, I_fir, Q_fir ); // working but need to loop unroll i think
 
     // demodulate
-    demodulate_n( I_fir, Q_fir, demod_real, demod_imag, SAMPLES, FM_DEMOD_GAIN, demod ); // working
+    demodulate_n( I_fir, Q_fir, demod_real, demod_imag, SAMPLES, FM_DEMOD_GAIN, demod ); // finished
 
     // L+R low-pass FIR filter - reduce sampling rate from 256 KHz to 32 KHz
     fir_n( demod, SAMPLES, AUDIO_LPR_COEFFS, fir_lpr_x, AUDIO_LPR_COEFF_TAPS, AUDIO_DECIM, audio_lpr_filter ); 
