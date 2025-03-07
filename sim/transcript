@@ -12,17 +12,6 @@
 # //  18 U.S.C. Section 1905.
 # //
 # ** Warning: License feature 'msimviewer' will expire today.
-ls
-# demodulate_sim.do
-# demodulate_tb.wlf
-# fir_complex_sim.do
-# fir_complex_tb.wlf
-# fir_lpr_sim.do
-# modelsim.ini
-# read_iq_sim.do
-# read_iq_tb.wlf
-# transcript
-# work
 do fir_lpr_sim.do
 # -9
 # ** Warning: (vlib-34) Library already exists at "work".
@@ -30,432 +19,43 @@ do fir_lpr_sim.do
 # vmap work work 
 # Modifying modelsim.ini
 # Model Technology ModelSim SE-64 vlog 2020.1 Compiler 2020.01 Jan 28 2020
-# Start time: 10:55:39 on Mar 07,2025
+# Start time: 11:11:26 on Mar 07,2025
 # vlog -reportprogress 300 -work work ../sv/fifo.sv 
 # -- Compiling module fifo
 # 
 # Top level modules:
 # 	fifo
-# End time: 10:55:40 on Mar 07,2025, Elapsed time: 0:00:01
+# End time: 11:11:26 on Mar 07,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim SE-64 vlog 2020.1 Compiler 2020.01 Jan 28 2020
-# Start time: 10:55:40 on Mar 07,2025
+# Start time: 11:11:26 on Mar 07,2025
 # vlog -reportprogress 300 -work work ../sv/fir.sv 
 # -- Compiling module fir
 # 
 # Top level modules:
 # 	fir
-# End time: 10:55:40 on Mar 07,2025, Elapsed time: 0:00:00
+# End time: 11:11:26 on Mar 07,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim SE-64 vlog 2020.1 Compiler 2020.01 Jan 28 2020
-# Start time: 10:55:40 on Mar 07,2025
-# vlog -reportprogress 300 -work work ../sv/fir_top.sv 
-# -- Compiling module fir_top
-# ** Error: (vlog-13069) ../sv/fir_top.sv(46): near ")": syntax error, unexpected ')', expecting '.'.
-# End time: 10:55:40 on Mar 07,2025, Elapsed time: 0:00:00
-# Errors: 1, Warnings: 0
-# ** Error: /vol/mentor/modelsim-2020.1/modeltech/linux_x86_64/vlog failed.
-# Error in macro ./fir_lpr_sim.do line 8
-# /vol/mentor/modelsim-2020.1/modeltech/linux_x86_64/vlog failed.
-#     while executing
-# "vlog -work work "../sv/fir_top.sv""
-do fir_lpr_sim.do
-# -9
-# ** Warning: (vlib-34) Library already exists at "work".
-# Model Technology ModelSim SE-64 vmap 2020.1 Lib Mapping Utility 2020.01 Jan 28 2020
-# vmap work work 
-# Modifying modelsim.ini
-# Model Technology ModelSim SE-64 vlog 2020.1 Compiler 2020.01 Jan 28 2020
-# Start time: 10:56:09 on Mar 07,2025
-# vlog -reportprogress 300 -work work ../sv/fifo.sv 
-# -- Compiling module fifo
-# 
-# Top level modules:
-# 	fifo
-# End time: 10:56:10 on Mar 07,2025, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim SE-64 vlog 2020.1 Compiler 2020.01 Jan 28 2020
-# Start time: 10:56:10 on Mar 07,2025
-# vlog -reportprogress 300 -work work ../sv/fir.sv 
-# -- Compiling module fir
-# 
-# Top level modules:
-# 	fir
-# End time: 10:56:10 on Mar 07,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim SE-64 vlog 2020.1 Compiler 2020.01 Jan 28 2020
-# Start time: 10:56:10 on Mar 07,2025
+# Start time: 11:11:26 on Mar 07,2025
 # vlog -reportprogress 300 -work work ../sv/fir_top.sv 
 # -- Compiling module fir_top
 # 
 # Top level modules:
 # 	fir_top
-# End time: 10:56:10 on Mar 07,2025, Elapsed time: 0:00:00
+# End time: 11:11:26 on Mar 07,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim SE-64 vlog 2020.1 Compiler 2020.01 Jan 28 2020
-# Start time: 10:56:10 on Mar 07,2025
-# vlog -reportprogress 300 -work work ../sv/fir_tb.sv 
-# ** Error: (vlog-13069) ../sv/fir_tb.sv(1): near "1": syntax error, unexpected INTEGER NUMBER.
-# ** Error: ../sv/fir_tb.sv(1): (vlog-13205) Syntax error found in the scope following 'timescale'. Is there a missing '::'?
-# End time: 10:56:10 on Mar 07,2025, Elapsed time: 0:00:00
-# Errors: 2, Warnings: 0
-# ** Error: /vol/mentor/modelsim-2020.1/modeltech/linux_x86_64/vlog failed.
-# Error in macro ./fir_lpr_sim.do line 9
-# /vol/mentor/modelsim-2020.1/modeltech/linux_x86_64/vlog failed.
-#     while executing
-# "vlog -work work "../sv/fir_tb.sv""
-do fir_lpr_sim.do
-# -9
-# ** Warning: (vlib-34) Library already exists at "work".
-# Model Technology ModelSim SE-64 vmap 2020.1 Lib Mapping Utility 2020.01 Jan 28 2020
-# vmap work work 
-# Modifying modelsim.ini
-# Model Technology ModelSim SE-64 vlog 2020.1 Compiler 2020.01 Jan 28 2020
-# Start time: 10:56:38 on Mar 07,2025
-# vlog -reportprogress 300 -work work ../sv/fifo.sv 
-# -- Compiling module fifo
-# 
-# Top level modules:
-# 	fifo
-# End time: 10:56:38 on Mar 07,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim SE-64 vlog 2020.1 Compiler 2020.01 Jan 28 2020
-# Start time: 10:56:38 on Mar 07,2025
-# vlog -reportprogress 300 -work work ../sv/fir.sv 
-# -- Compiling module fir
-# 
-# Top level modules:
-# 	fir
-# End time: 10:56:38 on Mar 07,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim SE-64 vlog 2020.1 Compiler 2020.01 Jan 28 2020
-# Start time: 10:56:38 on Mar 07,2025
-# vlog -reportprogress 300 -work work ../sv/fir_top.sv 
-# -- Compiling module fir_top
-# 
-# Top level modules:
-# 	fir_top
-# End time: 10:56:38 on Mar 07,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim SE-64 vlog 2020.1 Compiler 2020.01 Jan 28 2020
-# Start time: 10:56:38 on Mar 07,2025
-# vlog -reportprogress 300 -work work ../sv/fir_tb.sv 
-# -- Compiling module fir_tb
-# ** Error: ../sv/fir_tb.sv(21): (vlog-2730) Undefined variable: 'AUDIO_LPR_COEFF_TAPS'.
-# End time: 10:56:39 on Mar 07,2025, Elapsed time: 0:00:01
-# Errors: 1, Warnings: 0
-# ** Error: /vol/mentor/modelsim-2020.1/modeltech/linux_x86_64/vlog failed.
-# Error in macro ./fir_lpr_sim.do line 9
-# /vol/mentor/modelsim-2020.1/modeltech/linux_x86_64/vlog failed.
-#     while executing
-# "vlog -work work "../sv/fir_tb.sv""
-do fir_lpr_sim.do
-# -9
-# ** Warning: (vlib-34) Library already exists at "work".
-# Model Technology ModelSim SE-64 vmap 2020.1 Lib Mapping Utility 2020.01 Jan 28 2020
-# vmap work work 
-# Modifying modelsim.ini
-# Model Technology ModelSim SE-64 vlog 2020.1 Compiler 2020.01 Jan 28 2020
-# Start time: 10:57:07 on Mar 07,2025
-# vlog -reportprogress 300 -work work ../sv/fifo.sv 
-# -- Compiling module fifo
-# 
-# Top level modules:
-# 	fifo
-# End time: 10:57:07 on Mar 07,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim SE-64 vlog 2020.1 Compiler 2020.01 Jan 28 2020
-# Start time: 10:57:07 on Mar 07,2025
-# vlog -reportprogress 300 -work work ../sv/fir.sv 
-# -- Compiling module fir
-# 
-# Top level modules:
-# 	fir
-# End time: 10:57:07 on Mar 07,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim SE-64 vlog 2020.1 Compiler 2020.01 Jan 28 2020
-# Start time: 10:57:07 on Mar 07,2025
-# vlog -reportprogress 300 -work work ../sv/fir_top.sv 
-# -- Compiling module fir_top
-# 
-# Top level modules:
-# 	fir_top
-# End time: 10:57:07 on Mar 07,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim SE-64 vlog 2020.1 Compiler 2020.01 Jan 28 2020
-# Start time: 10:57:07 on Mar 07,2025
+# Start time: 11:11:26 on Mar 07,2025
 # vlog -reportprogress 300 -work work ../sv/fir_tb.sv 
 # -- Compiling module fir_tb
 # 
 # Top level modules:
 # 	fir_tb
-# End time: 10:57:07 on Mar 07,2025, Elapsed time: 0:00:00
+# End time: 11:11:26 on Mar 07,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vsim -voptargs="+acc" "+notimingchecks" -L work work.fir_tb -wlf fir_tb.wlf 
-# Start time: 10:57:07 on Mar 07,2025
-# ** Note: (vsim-3812) Design is being optimized...
-# ** Error (suppressible): ../sv/fir_tb.sv(26): (vopt-13173) Illegal unpacked array concatenation. The number of elements (32) doesn't match with the type's width (20).
-# ** Error: ../sv/fir_tb.sv(26): (vopt-121) Incomplete array/struct literals
-# ** Error: ../sv/fir_tb.sv(26): (vopt-121) Incomplete array/struct literals
-# ** Error: ../sv/fir_tb.sv(26): (vopt-121) Incomplete array/struct literals
-# ** Error: ../sv/fir_tb.sv(26): (vopt-121) Incomplete array/struct literals
-# ** Error: ../sv/fir_tb.sv(26): (vopt-121) Incomplete array/struct literals
-# ** Error: ../sv/fir_tb.sv(26): (vopt-121) Incomplete array/struct literals
-# ** Error: ../sv/fir_tb.sv(26): (vopt-121) Incomplete array/struct literals
-# ** Error: ../sv/fir_tb.sv(26): (vopt-121) Incomplete array/struct literals
-# ** Error: ../sv/fir_tb.sv(26): (vopt-121) Incomplete array/struct literals
-# ** Error: ../sv/fir_tb.sv(26): (vopt-121) Incomplete array/struct literals
-# ** Error: ../sv/fir_tb.sv(26): (vopt-121) Incomplete array/struct literals
-# Optimization failed
-# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=12, Warnings=0.
-# Error loading design
-# Error: Error loading design
-#        Pausing macro execution
-# MACRO ./fir_lpr_sim.do PAUSED at line 12
-ls
-# demodulate_sim.do
-# demodulate_tb.wlf
-# fir_complex_sim.do
-# fir_complex_tb.wlf
-# fir_lpr_sim.do
-# modelsim.ini
-# read_iq_sim.do
-# read_iq_tb.wlf
-# transcript
-# work
-do fir_lpr_sim.do
-# -9
-# ** Warning: (vlib-34) Library already exists at "work".
-# Model Technology ModelSim SE-64 vmap 2020.1 Lib Mapping Utility 2020.01 Jan 28 2020
-# vmap work work 
-# Modifying modelsim.ini
-# Model Technology ModelSim SE-64 vlog 2020.1 Compiler 2020.01 Jan 28 2020
-# Start time: 10:58:05 on Mar 07,2025
-# vlog -reportprogress 300 -work work ../sv/fifo.sv 
-# -- Compiling module fifo
-# 
-# Top level modules:
-# 	fifo
-# End time: 10:58:05 on Mar 07,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim SE-64 vlog 2020.1 Compiler 2020.01 Jan 28 2020
-# Start time: 10:58:05 on Mar 07,2025
-# vlog -reportprogress 300 -work work ../sv/fir.sv 
-# -- Compiling module fir
-# 
-# Top level modules:
-# 	fir
-# End time: 10:58:06 on Mar 07,2025, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim SE-64 vlog 2020.1 Compiler 2020.01 Jan 28 2020
-# Start time: 10:58:06 on Mar 07,2025
-# vlog -reportprogress 300 -work work ../sv/fir_top.sv 
-# -- Compiling module fir_top
-# 
-# Top level modules:
-# 	fir_top
-# End time: 10:58:06 on Mar 07,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim SE-64 vlog 2020.1 Compiler 2020.01 Jan 28 2020
-# Start time: 10:58:06 on Mar 07,2025
-# vlog -reportprogress 300 -work work ../sv/fir_tb.sv 
-# -- Compiling module fir_tb
-# 
-# Top level modules:
-# 	fir_tb
-# End time: 10:58:06 on Mar 07,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# vsim -voptargs="+acc" "+notimingchecks" -L work work.fir_tb -wlf fir_tb.wlf 
-# Start time: 10:57:07 on Mar 07,2025
-# ** Note: (vsim-3812) Design is being optimized...
-# ** Note: (vopt-143) Recognized 1 FSM in module "fir(fast)".
-# ** Warning: License feature 'msimhdlsim' will expire today.
-# Loading sv_std.std
-# Loading work.fir_tb(fast)
-# Loading work.fir_top(fast)
-# Loading work.fifo(fast)
-# Loading work.fir(fast)
-# @ 20: Loading file ../source/src/txt_files/demodulate_cmp.txt...
-# @ 25: Comparing file ../source/src/txt_files/audio_lpr_cmp.txt...
-# @ 30: Beginning simulation...
-# @ 485: (1): CORRECT RESULT: ffffff9f == ffffff9f.
-# @ 895: (2): ERROR: 000006aa != 0000070b.
-# @ 1305: (3): ERROR: 000019c5 != 0000131b.
-# @ 1715: (4): ERROR: 00002050 != 0000068b.
-# @ 2125: (5): ERROR: 000027c3 != 00000773.
-# @ 2535: (6): ERROR: 00002e26 != 00000663.
-# @ 2945: (7): ERROR: 00003490 != 0000066a.
-# @ 3355: (8): ERROR: 00003b5d != 000006cd.
-# @ 3765: (9): ERROR: 0000419a != 0000063d.
-# @ 4175: (10): ERROR: 00004910 != 00000776.
-# @ 4585: (11): ERROR: 00004fac != 0000069c.
-# @ 4995: (12): ERROR: 000056fa != 0000074e.
-# @ 5405: (13): ERROR: 00005e34 != 0000073a.
-# @ 5815: (14): ERROR: 0000641f != 000005eb.
-# @ 6225: (15): ERROR: 00006a2d != 0000060e.
-# @ 6635: (16): ERROR: 00006e0b != 000003de.
-# @ 7045: (17): ERROR: 00007213 != 00000408.
-# @ 7455: (18): ERROR: 000074fc != 000002e9.
-# @ 7865: (19): ERROR: 0000770c != 00000210.
-# @ 8275: (20): ERROR: 00007a87 != 0000037b.
-# @ 8685: (21): ERROR: 00007d02 != 0000027b.
-# @ 9095: (22): ERROR: 000081de != 000004dc.
-# @ 9505: (23): ERROR: 000086d2 != 000004f4.
-# @ 9915: (24): ERROR: 00008cab != 000005d9.
-# @ 10325: (25): ERROR: 00009353 != 000006a8.
-# @ 10735: (26): ERROR: 00009992 != 0000063f.
-# @ 11145: (27): ERROR: 0000a0e6 != 00000754.
-# @ 11555: (28): ERROR: 0000a797 != 000006b1.
-# @ 11965: (29): ERROR: 0000ae61 != 000006ca.
-# @ 12375: (30): ERROR: 0000b4c7 != 00000666.
-# @ 12785: (31): ERROR: 0000ba31 != 0000056a.
-# @ 13195: (32): ERROR: 0000c0eb != 000006ba.
-# @ 13605: (33): ERROR: 0000c7b3 != 000006c8.
-# @ 14015: (34): ERROR: 0000cfbc != 00000809.
-# @ 14425: (35): ERROR: 0000d8b9 != 000008fd.
-# @ 14835: (36): ERROR: 0000e18b != 000008d2.
-# @ 15245: (37): ERROR: 0000eb8e != 00000a03.
-# @ 15655: (38): ERROR: 0000f46e != 000008e0.
-# @ 16065: (39): ERROR: 0000fda5 != 00000937.
-# @ 16475: (40): ERROR: 00010737 != 00000992.
-# @ 16885: (41): ERROR: 00010fe4 != 000008ad.
-# @ 17295: (42): ERROR: 000118d0 != 000008ec.
-# @ 17705: (43): ERROR: 00012041 != 00000771.
-# @ 18115: (44): ERROR: 000127cc != 0000078b.
-# @ 18525: (45): ERROR: 00012f72 != 000007a6.
-# @ 18935: (46): ERROR: 000135f8 != 00000686.
-# @ 19345: (47): ERROR: 00013d81 != 00000789.
-# @ 19755: (48): ERROR: 000143c7 != 00000646.
-# @ 20165: (49): ERROR: 00014ab8 != 000006f1.
-# @ 20575: (50): ERROR: 000151ae != 000006f6.
-# @ 20985: (51): ERROR: 0001577e != 000005d0.
-# @ 21395: (52): ERROR: 00015e68 != 000006ea.
-# @ 21805: (53): ERROR: 000163f3 != 0000058b.
-# @ 22215: (54): ERROR: 00016a9c != 000006a9.
-# @ 22625: (55): ERROR: 0001711a != 0000067e.
-# @ 23035: (56): ERROR: 0001774a != 00000630.
-# @ 23445: (57): ERROR: 00017ef1 != 000007a7.
-# @ 23855: (58): ERROR: 0001859d != 000006ac.
-# @ 24265: (59): ERROR: 00018da1 != 00000804.
-# @ 24675: (60): ERROR: 00019579 != 000007d8.
-# @ 25085: (61): ERROR: 00019d63 != 000007ea.
-# @ 25495: (62): ERROR: 0001a61d != 000008ba.
-# @ 25905: (63): ERROR: 0001ae0a != 000007ed.
-# @ 26315: (64): ERROR: 0001b6bc != 000008b2.
-# @ 26725: (65): ERROR: 0001be32 != 00000776.
-# @ 27135: (66): ERROR: 0001c509 != 000006d7.
-# @ 27545: (67): ERROR: 0001c6de != 000001d5.
-# @ 27955: (68): ERROR: 0001c3b2 != fffffcd4.
-# @ 28365: (69): ERROR: 0001bd5b != fffff9a9.
-# @ 28775: (70): ERROR: 0001b7b4 != fffffa59.
-# @ 29185: (71): ERROR: 0001b57c != fffffdc8.
-# @ 29595: (72): ERROR: 0001b878 != 000002fc.
-# @ 30005: (73): ERROR: 0001bf23 != 000006ab.
-# @ 30415: (74): ERROR: 0001c315 != 000003f2.
-# @ 30825: (75): ERROR: 0001c683 != 0000036e.
-# @ 31235: (76): ERROR: 0001c576 != fffffef3.
-# @ 31645: (77): ERROR: 0001c16b != fffffbf5.
-# @ 32055: (78): ERROR: 0001bbb9 != fffffa4e.
-# @ 32465: (79): ERROR: 0001b3ab != fffff7f2.
-# @ 32875: (80): ERROR: 0001ac06 != fffff85b.
-# @ 33285: (81): ERROR: 0001a500 != fffff8fa.
-# @ 33695: (82): ERROR: 0001a084 != fffffb84.
-# @ 34105: (83): ERROR: 00019dd3 != fffffd4f.
-# @ 34515: (84): ERROR: 00019ab6 != fffffce3.
-# @ 34925: (85): ERROR: 00019a79 != ffffffc3.
-# @ 35335: (86): ERROR: 00019904 != fffffe8b.
-# @ 35745: (87): ERROR: 000195e7 != fffffce3.
-# @ 36155: (88): ERROR: 00019190 != fffffba9.
-# @ 36565: (89): ERROR: 00018b17 != fffff987.
-# @ 36975: (90): ERROR: 000185d5 != fffffabe.
-# @ 37385: (91): ERROR: 00018164 != fffffb8f.
-# @ 37795: (92): ERROR: 00017fc1 != fffffe5d.
-# @ 38205: (93): ERROR: 00017c02 != fffffc41.
-# @ 38615: (94): ERROR: 0001765d != fffffa5b.
-# @ 39025: (95): ERROR: 000173ec != fffffd8f.
-# @ 39435: (96): ERROR: 000170b2 != fffffcc6.
-# @ 39845: (97): ERROR: 00016c6a != fffffbb8.
-# @ 40255: (98): ERROR: 00016629 != fffff9bf.
-# @ 40665: (99): ERROR: 0001619f != fffffb76.
-# @ 41075: (100): ERROR: 000161cf != 00000030.
-# @ 41485: (101): ERROR: 000163ae != 000001df.
-# @ 41895: (102): ERROR: 0001697b != 000005cd.
-# @ 42305: (103): ERROR: 00016faa != 0000062f.
-# @ 42715: (104): ERROR: 000172a0 != 000002f6.
-# @ 43125: (105): ERROR: 00017288 != ffffffe8.
-# @ 43535: (106): ERROR: 00016dab != fffffb23.
-# @ 43945: (107): ERROR: 0001684a != fffffa9f.
-# @ 44355: (108): ERROR: 00016303 != fffffab9.
-# @ 44765: (109): ERROR: 00015c8b != fffff988.
-# @ 45175: (110): ERROR: 0001561b != fffff990.
-# @ 45585: (111): ERROR: 00014fce != fffff9b3.
-# @ 45995: (112): ERROR: 00014f33 != ffffff65.
-# @ 46405: (113): ERROR: 00014ed6 != ffffffa3.
-# @ 46815: (114): ERROR: 00014e45 != ffffff6f.
-# @ 47225: (115): ERROR: 0001508f != 0000024a.
-# @ 47635: (116): ERROR: 0001532c != 0000029d.
-# @ 48045: (117): ERROR: 00015530 != 00000204.
-# @ 48455: (118): ERROR: 0001551c != ffffffec.
-# @ 48865: (119): ERROR: 00015627 != 0000010b.
-# @ 49275: (120): ERROR: 00015729 != 00000102.
-# @ 49685: (121): ERROR: 00015838 != 0000010f.
-# @ 50095: (122): ERROR: 00015b7b != 00000343.
-# @ 50505: (123): ERROR: 00015b15 != ffffff9a.
-# @ 50915: (124): ERROR: 00015a44 != ffffff2f.
-# @ 51325: (125): ERROR: 00015bc3 != 0000017f.
-# @ 51335: Simulation completed.
-# Total simulation cycle count: 5130
-# Total error count: 124
-# ** Note: $finish    : ../sv/fir_tb.sv(92)
-#    Time: 51335 ns  Iteration: 2  Instance: /fir_tb
-# 1
-# Break in NamedBeginStat tb_process at ../sv/fir_tb.sv line 92
-do fir_lpr_sim.do
-# -9
-# ** Warning: (vlib-34) Library already exists at "work".
-# Model Technology ModelSim SE-64 vmap 2020.1 Lib Mapping Utility 2020.01 Jan 28 2020
-# vmap work work 
-# Modifying modelsim.ini
-# Model Technology ModelSim SE-64 vlog 2020.1 Compiler 2020.01 Jan 28 2020
-# Start time: 11:01:54 on Mar 07,2025
-# vlog -reportprogress 300 -work work ../sv/fifo.sv 
-# -- Compiling module fifo
-# 
-# Top level modules:
-# 	fifo
-# End time: 11:01:54 on Mar 07,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim SE-64 vlog 2020.1 Compiler 2020.01 Jan 28 2020
-# Start time: 11:01:54 on Mar 07,2025
-# vlog -reportprogress 300 -work work ../sv/fir.sv 
-# -- Compiling module fir
-# 
-# Top level modules:
-# 	fir
-# End time: 11:01:54 on Mar 07,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim SE-64 vlog 2020.1 Compiler 2020.01 Jan 28 2020
-# Start time: 11:01:54 on Mar 07,2025
-# vlog -reportprogress 300 -work work ../sv/fir_top.sv 
-# -- Compiling module fir_top
-# 
-# Top level modules:
-# 	fir_top
-# End time: 11:01:54 on Mar 07,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim SE-64 vlog 2020.1 Compiler 2020.01 Jan 28 2020
-# Start time: 11:01:54 on Mar 07,2025
-# vlog -reportprogress 300 -work work ../sv/fir_tb.sv 
-# -- Compiling module fir_tb
-# 
-# Top level modules:
-# 	fir_tb
-# End time: 11:01:54 on Mar 07,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# End time: 11:01:54 on Mar 07,2025, Elapsed time: 0:04:47
-# Errors: 12, Warnings: 0
-# vsim -voptargs="+acc" "+notimingchecks" -L work work.fir_tb -wlf fir_tb.wlf 
-# Start time: 11:01:54 on Mar 07,2025
+# Start time: 11:11:26 on Mar 07,2025
 # ** Note: (vsim-3813) Design is being optimized due to module recompilation...
 # ** Note: (vopt-143) Recognized 1 FSM in module "fir(fast)".
 # ** Warning: License feature 'msimhdlsim' will expire today.
@@ -595,9 +195,9 @@ do fir_lpr_sim.do
 # @ 51335: Simulation completed.
 # Total simulation cycle count: 5130
 # Total error count: 0
-# ** Note: $finish    : ../sv/fir_tb.sv(92)
+# ** Note: $finish    : ../sv/fir_tb.sv(93)
 #    Time: 51335 ns  Iteration: 2  Instance: /fir_tb
 # 1
-# Break in NamedBeginStat tb_process at ../sv/fir_tb.sv line 92
-# End time: 11:04:44 on Mar 07,2025, Elapsed time: 0:02:50
+# Break in NamedBeginStat tb_process at ../sv/fir_tb.sv line 93
+# End time: 11:11:46 on Mar 07,2025, Elapsed time: 0:00:20
 # Errors: 0, Warnings: 0

@@ -1,7 +1,14 @@
 module fir #(
     parameter TAPS = 32,
     parameter DECIMATION = 8,
-    parameter DATA_SIZE = 32
+    parameter DATA_SIZE = 32,
+    parameter [0:TAPS-1][DATA_SIZE-1:0] GLOBAL_COEFF =
+    '{
+        (32'hfffffffd), (32'hfffffffa), (32'hfffffff4), (32'hffffffed), (32'hffffffe5), (32'hffffffdf), (32'hffffffe2), (32'hfffffff3), 
+        (32'h00000015), (32'h0000004e), (32'h0000009b), (32'h000000f9), (32'h0000015d), (32'h000001be), (32'h0000020e), (32'h00000243), 
+        (32'h00000243), (32'h0000020e), (32'h000001be), (32'h0000015d), (32'h000000f9), (32'h0000009b), (32'h0000004e), (32'h00000015), 
+        (32'hfffffff3), (32'hffffffe2), (32'hffffffdf), (32'hffffffe5), (32'hffffffed), (32'hfffffff4), (32'hfffffffa), (32'hfffffffd)
+    }
 )
 (
     input  logic                    clock,
@@ -17,13 +24,13 @@ module fir #(
 );
 
 // first test with 	AUDIO_LPR_COEFF_TAPS  to confirm its right
-parameter logic signed [0:TAPS-1] [DATA_SIZE-1:0] AUDIO_LPR_COEFFS = '{
-	32'hfffffffd, 32'hfffffffa, 32'hfffffff4, 32'hffffffed, 32'hffffffe5, 32'hffffffdf, 32'hffffffe2, 32'hfffffff3, 
-	32'h00000015, 32'h0000004e, 32'h0000009b, 32'h000000f9, 32'h0000015d, 32'h000001be, 32'h0000020e, 32'h00000243, 
-	32'h00000243, 32'h0000020e, 32'h000001be, 32'h0000015d, 32'h000000f9, 32'h0000009b, 32'h0000004e, 32'h00000015, 
-	32'hfffffff3, 32'hffffffe2, 32'hffffffdf, 32'hffffffe5, 32'hffffffed, 32'hfffffff4, 32'hfffffffa, 32'hfffffffd
-};
-
+// parameter logic signed [0:TAPS-1] [DATA_SIZE-1:0] AUDIO_LPR_COEFFS = '{
+// 	32'hfffffffd, 32'hfffffffa, 32'hfffffff4, 32'hffffffed, 32'hffffffe5, 32'hffffffdf, 32'hffffffe2, 32'hfffffff3, 
+// 	32'h00000015, 32'h0000004e, 32'h0000009b, 32'h000000f9, 32'h0000015d, 32'h000001be, 32'h0000020e, 32'h00000243, 
+// 	32'h00000243, 32'h0000020e, 32'h000001be, 32'h0000015d, 32'h000000f9, 32'h0000009b, 32'h0000004e, 32'h00000015, 
+// 	32'hfffffff3, 32'hffffffe2, 32'hffffffdf, 32'hffffffe5, 32'hffffffed, 32'hfffffff4, 32'hfffffffa, 32'hfffffffd
+// };
+// make is global for the fm radio top
 
 typedef enum logic[2:0] {
     INIT, 
@@ -93,7 +100,7 @@ always_comb begin
         end
 
         COMPUTE: begin
-            temp_sum = AUDIO_LPR_COEFFS[TAPS - count - 1] * x[count];
+            temp_sum = GLOBAL_COEFF[TAPS - count - 1] * x[count];
             temp_deq = DEQUANTIZE(temp_sum);
             sum_c = sum + temp_deq;
 

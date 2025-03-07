@@ -40,7 +40,8 @@ integer out_errors    = '0;
 fir_top #(
     .TAPS(TAPS),
     .DECIMATION(DECIMATION),
-    .DATA_SIZE(DATA_SIZE)
+    .DATA_SIZE(DATA_SIZE),
+    .GLOBAL_COEFF(AUDIO_LPR_COEFFS)
 
 ) fir_top_inst (
     .clock(clock),
