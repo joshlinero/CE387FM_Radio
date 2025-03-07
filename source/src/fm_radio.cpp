@@ -64,28 +64,28 @@ void fm_radio_stereo(unsigned char *IQ, int *left_audio, int *right_audio)
     demodulate_n( I_fir, Q_fir, demod_real, demod_imag, SAMPLES, FM_DEMOD_GAIN, demod ); // finished
 
     // L+R low-pass FIR filter - reduce sampling rate from 256 KHz to 32 KHz
-    fir_n( demod, SAMPLES, AUDIO_LPR_COEFFS, fir_lpr_x, AUDIO_LPR_COEFF_TAPS, AUDIO_DECIM, audio_lpr_filter ); 
+    fir_n( demod, SAMPLES, AUDIO_LPR_COEFFS, fir_lpr_x, AUDIO_LPR_COEFF_TAPS, AUDIO_DECIM, audio_lpr_filter );  // works but i think later we need to make it loop unrolled too
 
     // L-R band-pass filter extracts the L-R channel from 23kHz to 53kHz
-    fir_n( demod, SAMPLES, BP_LMR_COEFFS, fir_bp_x, BP_LMR_COEFF_TAPS, 1, bp_lmr_filter ); 
+    fir_n( demod, SAMPLES, BP_LMR_COEFFS, fir_bp_x, BP_LMR_COEFF_TAPS, 1, bp_lmr_filter );  // works but i think later we need to make it loop unrolled too
 
     // Pilot band-pass filter extracts the 19kHz pilot tone
-    fir_n( demod, SAMPLES, BP_PILOT_COEFFS, fir_pilot_x, BP_PILOT_COEFF_TAPS, 1, bp_pilot_filter ); 
+    fir_n( demod, SAMPLES, BP_PILOT_COEFFS, fir_pilot_x, BP_PILOT_COEFF_TAPS, 1, bp_pilot_filter );  // works but i think later we need to make it loop unrolled too
 
     // square the pilot tone to get 38kHz
-    multiply_n( bp_pilot_filter, bp_pilot_filter, SAMPLES, square );
+    multiply_n( bp_pilot_filter, bp_pilot_filter, SAMPLES, square ); // Finished
 
     // high-pass filter removes the tone at 0Hz created after the pilot tone is squared
-    fir_n( square, SAMPLES, HP_COEFFS, fir_hp_x, HP_COEFF_TAPS, 1, hp_pilot_filter ); 
+    fir_n( square, SAMPLES, HP_COEFFS, fir_hp_x, HP_COEFF_TAPS, 1, hp_pilot_filter );  // works but i think later we need to make it loop unrolled too
 
     // demodulate the L-R channel from 38kHz to baseband
-    multiply_n( hp_pilot_filter, bp_lmr_filter, SAMPLES, multiply );
+    multiply_n( hp_pilot_filter, bp_lmr_filter, SAMPLES, multiply ); // Finished
 
     // L-R low-pass FIR filter - reduce sampling rate from 256 KHz to 32 KHz
-    fir_n( multiply, SAMPLES, AUDIO_LMR_COEFFS, fir_lmr_x, AUDIO_LMR_COEFF_TAPS, AUDIO_DECIM, audio_lmr_filter ); 
+    fir_n( multiply, SAMPLES, AUDIO_LMR_COEFFS, fir_lmr_x, AUDIO_LMR_COEFF_TAPS, AUDIO_DECIM, audio_lmr_filter );  // works but i think later we need to make it loop unrolled too
 
     // Left audio channel - (L+R) + (L-R) = 2L 
-    add_n( audio_lpr_filter, audio_lmr_filter, AUDIO_SAMPLES, left );
+    add_n( audio_lpr_filter, audio_lmr_filter, AUDIO_SAMPLES, left ); 
 
     // Right audio channel - (L+R) - (L-R) = 2R
     sub_n( audio_lpr_filter, audio_lmr_filter, AUDIO_SAMPLES, right );
