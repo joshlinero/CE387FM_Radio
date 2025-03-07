@@ -1,4 +1,4 @@
-timescale 1 ns / 1 ns
+`timescale 1 ns / 1 ns
 
 module fir_tb;
 
@@ -14,11 +14,11 @@ logic start = '0;
 logic done  = '0;
 
 localparam DECIMATION = 8;
-localparam TAPS = 20;
+localparam TAPS = 32;
 localparam DATA_SIZE = 32;
 
 
-parameter logic signed [0:AUDIO_LPR_COEFF_TAPS-1] [DATA_SIZE-1:0] AUDIO_LPR_COEFFS = '{
+parameter logic signed [0:TAPS-1] [DATA_SIZE-1:0] AUDIO_LPR_COEFFS = '{
     32'hfffffffd, 32'hfffffffa, 32'hfffffff4, 32'hffffffed, 32'hffffffe5, 32'hffffffdf, 32'hffffffe2, 32'hfffffff3, 
     32'h00000015, 32'h0000004e, 32'h0000009b, 32'h000000f9, 32'h0000015d, 32'h000001be, 32'h0000020e, 32'h00000243, 
     32'h00000243, 32'h0000020e, 32'h000001be, 32'h0000015d, 32'h000000f9, 32'h0000009b, 32'h0000004e, 32'h00000015, 
@@ -105,8 +105,7 @@ initial begin : data_read_process
     @(negedge clock);
 
     i = 0;
-    // Only read the first 200 values of data
-    while (i < 200) begin
+    while (i < 1000) begin
  
         @(negedge clock);
         if (x_in_full == 1'b0) begin
@@ -140,7 +139,7 @@ initial begin : data_write_process
     y_out_rd_en = 1'b0;
 
     i = 0;
-    while (i < 200/DECIMATION) begin
+    while (i < 1000/DECIMATION) begin
         @(negedge clock);
         y_out_rd_en = 1'b0;
         if (y_out_empty == 1'b0) begin

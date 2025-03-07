@@ -42,7 +42,7 @@ fifo #(
 fir #(
     .TAPS(TAPS),
     .DECIMATION(DECIMATION),
-    .DATA_SIZE(DATA_SIZE),
+    .DATA_SIZE(DATA_SIZE)
 ) fir_inst (
     .clock(clock),
     .reset(reset),

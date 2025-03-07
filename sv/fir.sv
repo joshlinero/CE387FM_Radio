@@ -16,8 +16,8 @@ module fir #(
     output logic                    y_wr_en
 );
 
-	
-parameter logic signed [0:TAPS-1] [DATA_SIZE-1:0] CHANNEL_COEFFS = '{
+// first test with 	AUDIO_LPR_COEFF_TAPS  to confirm its right
+parameter logic signed [0:TAPS-1] [DATA_SIZE-1:0] AUDIO_LPR_COEFFS = '{
 	32'hfffffffd, 32'hfffffffa, 32'hfffffff4, 32'hffffffed, 32'hffffffe5, 32'hffffffdf, 32'hffffffe2, 32'hfffffff3, 
 	32'h00000015, 32'h0000004e, 32'h0000009b, 32'h000000f9, 32'h0000015d, 32'h000001be, 32'h0000020e, 32'h00000243, 
 	32'h00000243, 32'h0000020e, 32'h000001be, 32'h0000015d, 32'h000000f9, 32'h0000009b, 32'h0000004e, 32'h00000015, 
@@ -68,7 +68,7 @@ end
 always_comb begin
     x_c = x;
     count_c = count;
-    sum_c = sum;
+    sum_c = '0;
     temp_sum = '0;
     x_rd_en = 1'b0;
     y_wr_en_c = 1'b0;
@@ -93,7 +93,7 @@ always_comb begin
         end
 
         COMPUTE: begin
-            temp_sum = CHANNEL_COEFFS[TAPS - count - 1] * x[count];
+            temp_sum = AUDIO_LPR_COEFFS[TAPS - count - 1] * x[count];
             temp_deq = DEQUANTIZE(temp_sum);
             sum_c = sum + temp_deq;
 
