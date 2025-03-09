@@ -85,10 +85,10 @@ void fm_radio_stereo(unsigned char *IQ, int *left_audio, int *right_audio)
     fir_n( multiply, SAMPLES, AUDIO_LMR_COEFFS, fir_lmr_x, AUDIO_LMR_COEFF_TAPS, AUDIO_DECIM, audio_lmr_filter );  // works but i think later we need to make it loop unrolled too
 
     // Left audio channel - (L+R) + (L-R) = 2L 
-    add_n( audio_lpr_filter, audio_lmr_filter, AUDIO_SAMPLES, left ); 
+    add_n( audio_lpr_filter, audio_lmr_filter, AUDIO_SAMPLES, left );   // Finished
 
     // Right audio channel - (L+R) - (L-R) = 2R
-    sub_n( audio_lpr_filter, audio_lmr_filter, AUDIO_SAMPLES, right );
+    sub_n( audio_lpr_filter, audio_lmr_filter, AUDIO_SAMPLES, right ); // Finished
 
     // Left channel deemphasis
     deemphasis_n( left, deemph_l_x, deemph_l_y, AUDIO_SAMPLES, left_deemph );
