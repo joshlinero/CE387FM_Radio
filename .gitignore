@@ -1,1 +1,3 @@
 source/test/usrp.dat
+sim/*
+!sim/**/*.do
