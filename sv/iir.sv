@@ -1,5 +1,5 @@
 module iir #(
-    parameter TAPS = 32,
+    parameter TAPS = 2,
     parameter DECIMATION = 1,
     parameter DATA_SIZE = 32,
     parameter [0:TAPS-1][DATA_SIZE-1:0] X_COEFFS = 
@@ -100,7 +100,7 @@ always_comb begin
                 temp_sum += DEQUANTIZE(X_COEFFS[i] * x[i]);
                 temp_sum += DEQUANTIZE(Y_COEFFS[i] * y[i]);
             end
-            sum_c = temp_sum;
+            sum_c = sum + temp_sum;
 
             count_c = (count + 1) % TAPS;
             if (count == TAPS - 1) begin 
