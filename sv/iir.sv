@@ -43,7 +43,7 @@ logic [0:DATA_SIZE-1][DATA_SIZE-1:0] x, x_c;
 logic [0:DATA_SIZE-1][DATA_SIZE-1:0] y, y_c;
 logic [DATA_SIZE-1:0] count;
 logic [DATA_SIZE-1:0] count_c;
-logic [DATA_SIZE-1:0] sum, sum_c, temp_sum, temp_deq;
+logic [DATA_SIZE-1:0] sum, sum_c, temp_sum;
 logic [DATA_SIZE-1:0] y_out_c;
 logic y_wr_en_c;
 
