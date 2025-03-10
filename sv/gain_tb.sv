@@ -14,7 +14,13 @@ logic start = '0;
 logic done  = '0;
 
 localparam DATA_SIZE = 32;
-logic volume = 1;
+
+function logic signed [DATA_SIZE-1:0] QUANTIZE(logic signed [DATA_SIZE-1:0] val);
+    QUANTIZE = DATA_SIZE'(val << 10);
+endfunction
+
+//localparam DATA_SIZE = 32;
+logic signed [DATA_SIZE-1:0] volume = QUANTIZE(1);
 
 logic x_in_full;
 logic x_in_wr_en = '0;
@@ -129,7 +135,7 @@ initial begin : data_write_process
     y_out_rd_en = 1'b0;
 
     i = 0;
-    while (i < 1000/DECIMATION) begin
+    while (i < 1000) begin
         @(negedge clock);
         y_out_rd_en = 1'b0;
         if (y_out_empty == 1'b0) begin

@@ -4,7 +4,7 @@ module gain_top #(
     input   logic                   clock,
     input   logic                   reset,
 
-    input   logic                   volume,
+    input   logic signed [DATA_SIZE - 1:0] volume,
 
     input   logic [DATA_SIZE-1:0]   x_in_din,
     output  logic                   x_in_full,

@@ -1,4 +1,4 @@
-module multiply #(
+module gain #(
     parameter DATA_SIZE = 32
 )
 (
