@@ -12,6 +12,8 @@ vlog -work work "../sv/stereo_pilot_mult_tb.sv"
 
 vsim -voptargs=+acc +notimingchecks -L work work.stereo_pilot_mult_tb -wlf stereo_pilot_mult_tb.wlf
 
+config wave -signalnamewidth 1
+
 add wave -noupdate -group stereo_pilot_mult_tb
 add wave -noupdate -group stereo_pilot_mult_tb -radix hexadecimal /stereo_pilot_mult_tb/*
 

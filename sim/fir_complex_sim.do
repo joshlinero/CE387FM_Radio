@@ -11,6 +11,8 @@ vlog -work work "../sv/fir_complex_tb.sv"
 
 vsim -voptargs=+acc +notimingchecks -L work work.fir_complex_tb -wlf fir_complex_tb.wlf
 
+config wave -signalnamewidth 1
+
 add wave -noupdate -group fir_complex_tb
 add wave -noupdate -group fir_complex_tb -radix hexadecimal /fir_complex_tb/*
 

@@ -11,6 +11,8 @@ vlog -work work "../sv/iir_tb.sv"
 
 vsim -voptargs=+acc +notimingchecks -L work work.iir_tb -wlf iir_tb.wlf
 
+config wave -signalnamewidth 1
+
 add wave -noupdate -group iir_tb
 add wave -noupdate -group iir_tb -radix hexadecimal /iir_tb/*
 

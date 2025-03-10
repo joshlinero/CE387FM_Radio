@@ -11,6 +11,8 @@ vlog -work work "../sv/read_iq_tb.sv"
 
 vsim -voptargs=+acc +notimingchecks -L work work.read_iq_tb -wlf read_iq_tb.wlf
 
+config wave -signalnamewidth 1
+
 add wave -noupdate -group read_iq_tb
 add wave -noupdate -group read_iq_tb -radix hexadecimal /read_iq_tb/*
 

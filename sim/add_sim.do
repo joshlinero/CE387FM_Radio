@@ -11,6 +11,8 @@ vlog -work work "../sv/add_tb.sv"
 
 vsim -voptargs=+acc +notimingchecks -L work work.add_tb -wlf add_tb.wlf
 
+config wave -signalnamewidth 1
+
 add wave -noupdate -group add_tb
 add wave -noupdate -group add_tb -radix hexadecimal /add_tb/*
 

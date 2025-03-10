@@ -13,6 +13,8 @@ vlog -work work "../sv/demodulate_tb.sv"
 
 vsim -voptargs=+acc +notimingchecks -L work work.demodulate_tb -wlf demodulate_tb.wlf
 
+config wave -signalnamewidth 1
+
 add wave -noupdate -group demodulate_tb
 add wave -noupdate -group demodulate_tb -radix hexadecimal /demodulate_tb/*
 
