@@ -1,7 +1,6 @@
 module fm_radio_top #(
     parameter DATA_SIZE = 32,
-    parameter BYTE_SIZE = 8,
-    parameter CHAR_SIZE = 16
+    parameter BYTE_SIZE = 8
 ) (
     input  logic                    clock,
     input  logic                    reset,
@@ -60,7 +59,7 @@ fifo #(
 read_iq #(
     .DATA_SIZE(DATA_SIZE),
     .BYTE_SIZE(BYTE_SIZE),
-    .CHAR_SIZE(CHAR_SIZE),
+    .CHAR_SIZE(16),
     .BITS(10)
 ) read_iq_inst (
     .clock(clock),
