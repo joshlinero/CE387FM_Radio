@@ -91,16 +91,16 @@ void fm_radio_stereo(unsigned char *IQ, int *left_audio, int *right_audio)
     sub_n( audio_lpr_filter, audio_lmr_filter, AUDIO_SAMPLES, right ); // Finished
 
     // Left channel deemphasis
-    deemphasis_n( left, deemph_l_x, deemph_l_y, AUDIO_SAMPLES, left_deemph );
+    deemphasis_n( left, deemph_l_x, deemph_l_y, AUDIO_SAMPLES, left_deemph );  // working on it
 
     // Right channel deemphasis
-    deemphasis_n( right, deemph_r_x, deemph_r_y, AUDIO_SAMPLES, right_deemph );
+    deemphasis_n( right, deemph_r_x, deemph_r_y, AUDIO_SAMPLES, right_deemph );  // working on it
 
     // Left volume control
-    gain_n( left_deemph, AUDIO_SAMPLES, VOLUME_LEVEL, left_audio );
+    gain_n( left_deemph, AUDIO_SAMPLES, VOLUME_LEVEL, left_audio );  // Finished
 
     // Right volume control
-    gain_n( right_deemph, AUDIO_SAMPLES, VOLUME_LEVEL, right_audio );
+    gain_n( right_deemph, AUDIO_SAMPLES, VOLUME_LEVEL, right_audio ); // Finished
 }
 
 
