@@ -21,6 +21,12 @@ logic out_read_done = '0;
 logic in_write_done = '0;
 integer out_errors = '0;
 
+function logic signed [DATA_SIZE-1:0] QUANTIZE(logic signed [DATA_SIZE-1:0] val);
+    QUANTIZE = DATA_SIZE'(val << 10);
+endfunction
+
+logic signed [DATA_SIZE-1:0] volume = QUANTIZE(1);
+
 // CHANGE THIS PARAMETER TO CHANGE NUMBER TEST INPUT DATA IN
 localparam NUMBER_OF_INPUTS = 32000;
 
@@ -46,7 +52,8 @@ fm_radio_top #(
     .left_audio_out_rd_en(left_audio_out_rd_en),
     .right_audio_out_rd_en(right_audio_out_rd_en),
     .i_out_data(left_audio_out_data),
-    .right_audio_out_data(right_audio_out_data)
+    .right_audio_out_data(right_audio_out_data),
+    .volume(volume)
 );
 
 always begin

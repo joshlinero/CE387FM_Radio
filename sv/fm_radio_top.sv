@@ -16,7 +16,9 @@ module fm_radio_top #(
     input  logic                    right_audio_out_rd_en,
 
     output  logic [DATA_SIZE-1:0]   left_audio_out_data,
-    output  logic [DATA_SIZE-1:0]   right_audio_out_data
+    output  logic [DATA_SIZE-1:0]   right_audio_out_data,
+
+    input logic signed [DATA_SIZE-1:0]  volume
 );
 
 logic [BYTE_SIZE-1:0]  read_iq_in_dout;
@@ -763,7 +765,7 @@ fifo #(
     .empty(iir_right_out_empty)
 );
 
-logic signed [DATA_SIZE - 1:0] volume;
+//logic signed [DATA_SIZE - 1:0] volume;
 
 logic [DATA_SIZE-1:0] left_gain_out_din;
 logic left_gain_out_wr_en;
