@@ -96,9 +96,10 @@ always_comb begin
         end
 
         COMPUTE: begin
+            y_c[1:DATA_SIZE-1] = y[0:DATA_SIZE-2];
             for (int i = 0; i < TAPS; i++) begin
-                temp_sum += DEQUANTIZE(X_COEFFS[i] * x[i]);
-                temp_sum += DEQUANTIZE(Y_COEFFS[i] * y[i]);
+                temp_sum += DEQUANTIZE($signed(X_COEFFS[i]) * $signed(x[i]));
+                temp_sum += DEQUANTIZE($signed(Y_COEFFS[i]) * $signed(y[i]));
             end
             sum_c = sum + temp_sum;
 
@@ -113,8 +114,7 @@ always_comb begin
         WRITE: begin
             if (y_out_full == 1'b0) begin
                 y_wr_en_c = 1'b1;
-                y_out_c = sum;
-                y_c[1:DATA_SIZE-1] = y[0:DATA_SIZE-2];
+                y_out_c = y[TAPS-1];
                 y_c[0] = sum;
                 next_state = INIT;
             end else begin
