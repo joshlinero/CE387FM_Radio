@@ -2,3 +2,4 @@ source/test/usrp.dat
 sim/*
 !sim/**/*.do
 synth/*
+stdout.log
