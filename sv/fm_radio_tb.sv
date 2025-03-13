@@ -51,7 +51,7 @@ fm_radio_top #(
     .right_audio_out_empty(right_audio_out_empty),
     .left_audio_out_rd_en(left_audio_out_rd_en),
     .right_audio_out_rd_en(right_audio_out_rd_en),
-    .i_out_data(left_audio_out_data),
+    .left_audio_out_data(left_audio_out_data),
     .right_audio_out_data(right_audio_out_data),
     .volume(volume)
 );
