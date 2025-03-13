@@ -55,8 +55,7 @@ integer out_errors    = '0;
 
 fir_complex_top #(
     .DATA_SIZE(DATA_SIZE),
-    .TAPS(TAPS),
-    .DECIMATION(1)
+    .TAPS(TAPS)
 ) fir_complex_top_inst (
     .clock(clock),
     .reset(reset),

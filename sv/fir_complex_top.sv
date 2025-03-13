@@ -1,7 +1,6 @@
 module fir_complex_top #(
     parameter DATA_SIZE = 32,
-    parameter TAPS = 20,
-    parameter DECIMATION = 1
+    parameter TAPS = 20
 ) (
     input   logic                   clock,
     input   logic                   reset,
@@ -76,7 +75,7 @@ fifo #(
 // fir module
 fir_complex #(
     .TAPS(TAPS),
-    .DECIMATION(DECIMATION),
+    .UNROLL(4),
     .DATA_SIZE(DATA_SIZE)
 ) fir_complex_inst (
     .clock(clock),
