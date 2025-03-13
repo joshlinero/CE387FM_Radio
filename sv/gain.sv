@@ -71,6 +71,7 @@ always_comb begin
         GAIN: begin
             if (out_full == 1'b0) begin
                 gain_out = DEQUANTIZE(in_temp * volume) << 4;
+                //gain_out = in_temp << 4;
                 in_temp_c = '0;
                 out_wr_en = 1'b1;
                 next_state = INIT;
