@@ -123,28 +123,48 @@ logic                   fir_cmplx_imag_out_rd_en;
 logic [DATA_SIZE-1:0]   fir_cmplx_imag_out_dout;
 
 //fir_complex
+// fir_complex #(
+//     .TAPS(20),
+//     .DECIMATION(1),
+//     .DATA_SIZE(DATA_SIZE)
+// ) fir_complex_inst (
+//     .clock(clock),
+//     .reset(reset),
+
+//     .i_in(i_out_data),
+//     .fircmplx_i_empty(i_out_empty),
+//     .fircmplx_i_rd_en(i_out_rd_en),
+//     .q_in(q_out_data),
+//     .fircmplx_q_empty(q_out_empty),
+//     .fircmplx_q_rd_en(q_out_rd_en),
+
+//     .real_wr_en_cmplx(fir_cmplx_real_out_wr_en),
+//     .real_full_cmplx(fir_cmplx_real_out_full),
+//     .out_real_cmplx(fir_cmplx_real_out_din),
+//     .imag_wr_en_cmplx(fir_cmplx_imag_out_wr_en),
+//     .imag_full_cmplx(fir_cmplx_imag_out_full),
+//     .out_imag_cmplx(fir_cmplx_imag_out_din)
+// );
 fir_complex #(
-    .TAPS(20),
-    .DECIMATION(1),
+    .UNROLL(4),
     .DATA_SIZE(DATA_SIZE)
-) fir_complex_inst (
+) fir_complex_inst(
     .clock(clock),
     .reset(reset),
-
-    .i_in(i_out_data),
-    .fircmplx_i_empty(i_out_empty),
-    .fircmplx_i_rd_en(i_out_rd_en),
-    .q_in(q_out_data),
-    .fircmplx_q_empty(q_out_empty),
-    .fircmplx_q_rd_en(q_out_rd_en),
-
-    .real_wr_en_cmplx(fir_cmplx_real_out_wr_en),
-    .real_full_cmplx(fir_cmplx_real_out_full),
-    .out_real_cmplx(fir_cmplx_real_out_din),
-    .imag_wr_en_cmplx(fir_cmplx_imag_out_wr_en),
-    .imag_full_cmplx(fir_cmplx_imag_out_full),
-    .out_imag_cmplx(fir_cmplx_imag_out_din)
+    .xreal_in_dout(i_out_data),
+    .xreal_in_empty(i_out_empty),
+    .xreal_in_rd_en(i_out_rd_en),
+    .ximag_in_dout(q_out_data),
+    .ximag_in_empty(q_out_empty),
+    .ximag_in_rd_en(q_out_rd_en),
+    .yreal_out_wr_en(fir_cmplx_real_out_wr_en),
+    .yreal_out_full(fir_cmplx_real_out_full),
+    .yreal_out_din(fir_cmplx_real_out_din),
+    .yimag_out_wr_en(fir_cmplx_imag_out_wr_en),
+    .yimag_out_full(fir_cmplx_imag_out_full),
+    .yimag_out_din(fir_cmplx_imag_out_din)
 );
+
 
 fifo #(
     .FIFO_DATA_WIDTH(DATA_SIZE),
