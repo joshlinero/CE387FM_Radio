@@ -30,18 +30,26 @@ module divider_work #(
     int pos, pos_next;
     logic sign;
 
-    function automatic integer get_msb;
-        input logic [DIVIDEND_WIDTH-1:0] val;
-        integer i;
-        begin
-            get_msb = 0;
-            for (i = DIVIDEND_WIDTH-1; i >= 0; i = i - 1) begin
-                if (val[i] == 1'b1) begin
-                    get_msb = i;
-                    break;
-                end
+    function automatic logic [$clog2(DIVIDEND_WIDTH)-1:0] get_msb(logic [DIVIDEND_WIDTH-1:0] val, logic [$clog2(DIVIDEND_WIDTH)-1:0] msb);
+        logic [$clog2(DIVIDEND_WIDTH)-1:0] left;
+        logic [$clog2(DIVIDEND_WIDTH)-1:0] right;
+
+        if (val[msb] == 1'b1) begin
+            return msb;
+        end else if (msb == 1'b0) begin
+            return 1'b0;
+        end else begin
+            left = get_msb(val, msb - 1);
+            right = get_msb(val, (msb - 1) / 2);
+
+            if (left >= 1'b0) begin
+                return left;
+            end else if (right >= 1'b0) begin
+                return right;
+            end else begin
+                return 1'b0;
             end
-        end
+        end 
     endfunction
 
     always_ff @(posedge clock or posedge reset) begin
@@ -98,7 +106,7 @@ module divider_work #(
                     reg_1_next = 0;
                     next_state = DONE;
                 end else if (reg_1_curr >= reg_2_curr) begin
-                    pos_next = get_msb(reg_1_curr) - get_msb(reg_2_curr);
+                    pos_next = get_msb(reg_1_curr, (DIVIDENT_WIDTH-1)) - get_msb(reg_2_curr, (DIVISOR_WIDTH-1));
                     next_state = COMPUTE;
                 end else begin
                     next_state = DONE;
