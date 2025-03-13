@@ -21,8 +21,7 @@ module gain #(
 
 typedef enum logic [1:0] {
     INIT,
-    GAIN,
-    WRITE
+    GAIN
 } state_types;
 state_types state, next_state;
 
@@ -55,7 +54,7 @@ always_comb begin
     next_state = state;
     in_rd_en = 1'b0;
     out_wr_en = 1'b0;
-    in_temp_c = '0;
+    in_temp_c = in_temp;
     gain_out = '0;
 
     case (state) 
@@ -70,17 +69,14 @@ always_comb begin
         end
 
         GAIN: begin
-            gain_c = DEQUANTIZE($signed(in_temp) * $signed(volume)) <<< 14;
-            next_state = WRITE;
-        end
-
-        WRITE: begin
             if (out_full == 1'b0) begin
-                gain_out = DEQUANTIZE(gain);
+                gain_out = DEQUANTIZE(in_temp * volume) << 4;
+                in_temp_c = '0;
                 out_wr_en = 1'b1;
                 next_state = INIT;
-            end else 
-                next_state = WRITE;
+            end else begin
+                next_state = GAIN;
+            end
         end
 
         default: begin
