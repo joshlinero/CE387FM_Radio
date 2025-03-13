@@ -146,7 +146,7 @@ logic [DATA_SIZE-1:0]   fir_cmplx_imag_out_dout;
 //     .out_imag_cmplx(fir_cmplx_imag_out_din)
 // );
 fir_complex #(
-    .UNROLL(4),
+    .UNROLL(2),
     .DATA_SIZE(DATA_SIZE)
 ) fir_complex_inst(
     .clock(clock),
@@ -302,7 +302,8 @@ fir #(
     .TAPS(AUDIO_LPR_COEFF_TAPS),
     .DECIMATION(8),
     .DATA_SIZE(DATA_SIZE),
-    .GLOBAL_COEFF(AUDIO_LPR_COEFFS)
+    .GLOBAL_COEFF(AUDIO_LPR_COEFFS),
+    .UNROLL(2)
 ) fir_lpr_inst (
     .clock(clock),
     .reset(reset),
@@ -370,7 +371,8 @@ fir #(
     .TAPS(BP_LMR_COEFF_TAPS),
     .DECIMATION(1),
     .DATA_SIZE(DATA_SIZE),
-    .GLOBAL_COEFF(BP_LMR_COEFFS)
+    .GLOBAL_COEFF(BP_LMR_COEFFS),
+    .UNROLL(2)
 ) fir_bp_lmr_inst (
     .clock(clock),
     .reset(reset),
@@ -431,7 +433,8 @@ fir #(
     .TAPS(BP_PILOT_COEFF_TAPS),
     .DECIMATION(1),
     .DATA_SIZE(DATA_SIZE),
-    .GLOBAL_COEFF(BP_PILOT_COEFFS)
+    .GLOBAL_COEFF(BP_PILOT_COEFFS),
+    .UNROLL(2)
 ) fir_pilot_bp_inst (
     .clock(clock),
     .reset(reset),
@@ -535,7 +538,8 @@ fir #(
     .TAPS(HP_COEFF_TAPS),
     .DECIMATION(1),
     .DATA_SIZE(DATA_SIZE),
-    .GLOBAL_COEFF(HP_COEFFS)
+    .GLOBAL_COEFF(HP_COEFFS),
+    .UNROLL(2)
 ) fir_pilot_hp_inst (
     .clock(clock),
     .reset(reset),
@@ -638,7 +642,8 @@ fir #(
     .TAPS(AUDIO_LMR_COEFF_TAPS),
     .DECIMATION(8),
     .DATA_SIZE(DATA_SIZE),
-    .GLOBAL_COEFF(AUDIO_LMR_COEFFS)
+    .GLOBAL_COEFF(AUDIO_LMR_COEFFS),
+    .UNROLL(2)
 ) fir_lmr_inst (
     .clock(clock),
     .reset(reset),
