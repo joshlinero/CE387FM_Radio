@@ -39,11 +39,12 @@ function logic signed [DATA_SIZE-1:0] DEQUANTIZE(logic signed [DATA_SIZE-1:0] va
     end
 endfunction
 
-logic [0:DATA_SIZE-1][DATA_SIZE-1:0] x, x_c;
-logic [0:DATA_SIZE-1][DATA_SIZE-1:0] y, y_c;
+logic [0:TAPS-1][DATA_SIZE-1:0] x, x_c;
+logic [0:TAPS-1][DATA_SIZE-1:0] y, y_c;
 logic [DATA_SIZE-1:0] count;
 logic [DATA_SIZE-1:0] count_c;
-logic [DATA_SIZE-1:0] sum, sum_c, temp_sum;
+logic [DATA_SIZE-1:0] sum, sum_c, temp_sum_1, temp_sum_2, temp_sum_3, temp_sum_4;
+//logic [DATA_SIZE-1:0] temp_sum;
 logic [DATA_SIZE-1:0] y_out_c;
 logic y_wr_en_c;
 
@@ -72,7 +73,11 @@ always_comb begin
     y_c = y;
     count_c = count;
     sum_c = '0;
-    temp_sum = '0;
+    //temp_sum = '0;
+    temp_sum_1 = '0;
+    temp_sum_2 = '0;
+    temp_sum_3 = '0;
+    temp_sum_4 = '0;
     x_rd_en = 1'b0;
     y_wr_en_c = 1'b0;
     y_out_c = '0;
@@ -83,6 +88,7 @@ always_comb begin
                 x_rd_en = 1'b1;
                 x_c[1:DATA_SIZE-1] = x[0:DATA_SIZE-2];
                 x_c[0] = x_in;
+                y_c[1:DATA_SIZE-1] = y[0:DATA_SIZE-2];
 
                 count_c = (count + 1) % DECIMATION;
                 if (count == DECIMATION - 1) begin
@@ -96,25 +102,19 @@ always_comb begin
         end
 
         COMPUTE: begin
-            y_c[1:DATA_SIZE-1] = y[0:DATA_SIZE-2];
-            for (int i = 0; i < TAPS; i++) begin
-                temp_sum += DEQUANTIZE($signed(X_COEFFS[i]) * $signed(x[i]));
-                temp_sum += DEQUANTIZE($signed(Y_COEFFS[i]) * $signed(y[i]));
-            end
-            sum_c = sum + temp_sum;
+            temp_sum_1 = DEQUANTIZE($signed(X_COEFFS[0]) * $signed(x[0]));
+            temp_sum_2 = DEQUANTIZE($signed(X_COEFFS[1]) * $signed(x[1]));
+            temp_sum_3 = DEQUANTIZE($signed(Y_COEFFS[0]) * $signed(y[0]));
+            temp_sum_4 = DEQUANTIZE($signed(Y_COEFFS[1]) * $signed(y[1]));
+            sum_c = temp_sum_1 + temp_sum_2 + temp_sum_3 + temp_sum_4;
 
-            count_c = (count + 1) % TAPS;
-            if (count == TAPS - 1) begin 
-                next_state = WRITE;
-            end else begin
-                next_state = COMPUTE;
-            end
+            next_state = WRITE;
         end
 
         WRITE: begin
             if (y_out_full == 1'b0) begin
                 y_wr_en_c = 1'b1;
-                y_out_c = y[TAPS-1];
+                y_out_c = y[1];
                 y_c[0] = sum;
                 next_state = INIT;
             end else begin
