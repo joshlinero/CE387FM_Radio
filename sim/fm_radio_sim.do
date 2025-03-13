@@ -53,14 +53,14 @@ add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fifo_fir_cmplx_real_out_
 add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fifo_fir_cmplx_imag_out_inst
 add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fifo_fir_cmplx_imag_out_inst -radix hexadecimal /fm_radio_tb/fm_radio_top_inst/fifo_fir_cmplx_imag_out_inst/*
 
-add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fifo_demodulate_output
-add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fifo_demodulate_output -radix hexadecimal /fm_radio_tb/fm_radio_top_inst/fifo_demodulate_output/*
+add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fifo_demodulate1_output
+add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fifo_demodulate1_output -radix hexadecimal /fm_radio_tb/fm_radio_top_inst/fifo_demodulate1_output/*
 
 add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fir_lpr_inst
 add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fir_lpr_inst -radix hexadecimal /fm_radio_tb/fm_radio_top_inst/fir_lpr_inst/*
 
-add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fifo_lpr_out_inst
-add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fifo_lpr_out_inst -radix hexadecimal /fm_radio_tb/fm_radio_top_inst/fifo_lpr_out_inst/*
+add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fifo_lpr_out_inst1
+add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fifo_lpr_out_inst1 -radix hexadecimal /fm_radio_tb/fm_radio_top_inst/fifo_lpr_out_inst1/*
 
 add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fir_bp_lmr_inst
 add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fir_bp_lmr_inst -radix hexadecimal /fm_radio_tb/fm_radio_top_inst/fir_bp_lmr_inst/*
@@ -71,8 +71,8 @@ add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fifo_bp_lmr_out_inst -ra
 add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fir_pilot_bp_inst
 add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fir_pilot_bp_inst -radix hexadecimal /fm_radio_tb/fm_radio_top_inst/fir_pilot_bp_inst/*
 
-add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fifo_pilot_bp_out_inst
-add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fifo_pilot_bp_out_inst -radix hexadecimal /fm_radio_tb/fm_radio_top_inst/fifo_pilot_bp_out_inst/*
+add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fifo_pilot_bp_out_inst1
+add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fifo_pilot_bp_out_inst1 -radix hexadecimal /fm_radio_tb/fm_radio_top_inst/fifo_pilot_bp_out_inst1/*
 
 add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/mult_pilot_bp_inst
 add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/mult_pilot_bp_inst -radix hexadecimal /fm_radio_tb/fm_radio_top_inst/mult_pilot_bp_inst/*
@@ -89,14 +89,14 @@ add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fifo_pilot_hp_out_inst -
 add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/mult_pilot_lmr_inst
 add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/mult_pilot_lmr_inst -radix hexadecimal /fm_radio_tb/fm_radio_top_inst/mult_pilot_lmr_inst/*
 
-add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fifo_pilot_hp_out_inst
-add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fifo_pilot_hp_out_inst -radix hexadecimal /fm_radio_tb/fm_radio_top_inst/fifo_pilot_hp_out_inst/*
+add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fifo_pilot_mult_hp_out_inst
+add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fifo_pilot_mult_hp_out_inst -radix hexadecimal /fm_radio_tb/fm_radio_top_inst/fifo_pilot_mult_hp_out_inst/*
 
 add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fir_lmr_inst
 add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fir_lmr_inst -radix hexadecimal /fm_radio_tb/fm_radio_top_inst/fir_lmr_inst/*
 
-add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fifo_lmr_out_inst
-add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fifo_lmr_out_inst -radix hexadecimal /fm_radio_tb/fm_radio_top_inst/fifo_lmr_out_inst/*
+add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fifo_lmr_out_inst1
+add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/fifo_lmr_out_inst1 -radix hexadecimal /fm_radio_tb/fm_radio_top_inst/fifo_lmr_out_inst1/*
 
 add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/add_inst
 add wave -noupdate -group fm_radio_tb/fm_radio_top_inst/add_inst -radix hexadecimal /fm_radio_tb/fm_radio_top_inst/add_inst/*

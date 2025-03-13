@@ -34,15 +34,12 @@ logic         q_out_full;
 
 logic i_out_rd_en, q_out_rd_en;
 logic q_out_empty, i_out_empty;
-logic signed [DATA_SIZE-1:0] q_out_data. i_out_data;
-
-
-
+logic signed [DATA_SIZE-1:0] q_out_data, i_out_data;
 
 
 //input
 fifo #(
-    .FIFO_BUFFER_SIZE(16),
+    .FIFO_BUFFER_SIZE(128),
     .FIFO_DATA_WIDTH(BYTE_SIZE)
 ) fifo_in_inst (
     .reset(reset),
@@ -78,7 +75,7 @@ read_iq #(
 
 
 fifo #(
-    .FIFO_BUFFER_SIZE(16),
+    .FIFO_BUFFER_SIZE(128),
     .FIFO_DATA_WIDTH(DATA_SIZE)
 ) fifo_out_i_inst (
     .reset(reset),
@@ -94,7 +91,7 @@ fifo #(
 
 
 fifo #(
-    .FIFO_BUFFER_SIZE(16),
+    .FIFO_BUFFER_SIZE(128),
     .FIFO_DATA_WIDTH(DATA_SIZE)
 ) fifo_out_q_inst (
     .reset(reset),
@@ -117,13 +114,13 @@ logic fir_cmplx_imag_out_full;
 logic [DATA_SIZE-1:0] fir_cmplx_imag_out_din;
 
 
-logic                   fir_cmplx_real_out_empty,
-logic                   fir_cmplx_real_out_rd_en,
-logic [DATA_SIZE-1:0]   fir_cmplx_real_out_dout,
+logic                   fir_cmplx_real_out_empty;
+logic                   fir_cmplx_real_out_rd_en;
+logic [DATA_SIZE-1:0]   fir_cmplx_real_out_dout;
 
-logic                   fir_cmplx_imag_out_empty,
-logic                   fir_cmplx_imag_out_rd_en,
-logic [DATA_SIZE-1:0]   fir_cmplx_imag_out_dout
+logic                   fir_cmplx_imag_out_empty;
+logic                   fir_cmplx_imag_out_rd_en;
+logic [DATA_SIZE-1:0]   fir_cmplx_imag_out_dout;
 
 //fir_complex
 fir_complex #(
@@ -151,7 +148,7 @@ fir_complex #(
 
 fifo #(
     .FIFO_DATA_WIDTH(DATA_SIZE),
-    .FIFO_BUFFER_SIZE(16)
+    .FIFO_BUFFER_SIZE(128)
 ) fifo_fir_cmplx_real_out_inst (
     .reset(reset),
     .wr_clk(clock),
@@ -166,7 +163,7 @@ fifo #(
 
 fifo #(
     .FIFO_DATA_WIDTH(DATA_SIZE),
-    .FIFO_BUFFER_SIZE(16)
+    .FIFO_BUFFER_SIZE(128)
 ) fifo_fir_cmplx_imag_out_inst (
     .reset(reset),
     .wr_clk(clock),
@@ -183,11 +180,13 @@ fifo #(
 
 logic [DATA_SIZE-1:0] demod_out;
 logic demod_wr_en_out;
-logic demod_out_full;
+logic demod_out_full1, demod_out_full2, demod_out_full3;
 
-logic [DATA_SIZE-1:0] demod_data_out;
-logic demod_out_rd_en;
-logic demod_out_empty;
+logic [DATA_SIZE-1:0] demod_data_out1, demod_data_out2, demod_data_out3;
+logic demod_out_rd_en1, demod_out_rd_en2, demod_out_rd_en3;
+logic demod_out_empty1, demod_out_empty2, demod_out_empty3;
+
+assign demod_out_full = demod_out_full1 || demod_out_full2 || demod_out_full3;
 
 //demodulation
 
@@ -209,19 +208,52 @@ demodulate #(
 
 fifo #(
     .FIFO_DATA_WIDTH(DATA_SIZE),
-    .FIFO_BUFFER_SIZE(16)
-) fifo_demodulate_output (
+    .FIFO_BUFFER_SIZE(128)
+) fifo_demodulate1_output (
     .reset(reset),
     .wr_clk(clock),
     .wr_en(demod_wr_en_out),
     .din(demod_out),
-    .full(demod_out_full),
+    .full(demod_out_full1),
     .rd_clk(clock),
-    .rd_en(demod_out_rd_en),
-    .dout(demod_data_out),
-    .empty(demod_out_empty)
+    .rd_en(demod_out_rd_en1),
+    .dout(demod_data_out1),
+    .empty(demod_out_empty1)
 );
 
+
+fifo #(
+    .FIFO_DATA_WIDTH(DATA_SIZE),
+    .FIFO_BUFFER_SIZE(128)
+) fifo_demodulate2_output (
+    .reset(reset),
+    .wr_clk(clock),
+    .wr_en(demod_wr_en_out),
+    .din(demod_out),
+    .full(demod_out_full2),
+    .rd_clk(clock),
+    .rd_en(demod_out_rd_en2),
+    .dout(demod_data_out2),
+    .empty(demod_out_empty2)
+);
+
+fifo #(
+    .FIFO_DATA_WIDTH(DATA_SIZE),
+    .FIFO_BUFFER_SIZE(128)
+) fifo_demodulate3_output (
+    .reset(reset),
+    .wr_clk(clock),
+    .wr_en(demod_wr_en_out),
+    .din(demod_out),
+    .full(demod_out_full3),
+    .rd_clk(clock),
+    .rd_en(demod_out_rd_en3),
+    .dout(demod_data_out3),
+    .empty(demod_out_empty3)
+);
+// assign demod_out_rd_en1 = demod_out_rd_en;
+// assign demod_out_rd_en2 = demod_out_rd_en;
+// assign demod_out_rd_en3 = demod_out_rd_en;
 
 
 parameter  AUDIO_LPR_COEFF_TAPS = 32;
@@ -236,11 +268,14 @@ parameter logic signed [0:AUDIO_LPR_COEFF_TAPS-1] [DATA_SIZE-1:0] AUDIO_LPR_COEF
 
 logic [DATA_SIZE-1:0] fir_lpr_out_din;
 logic fir_lpr_out_wr_en;
-logic fir_lpr_out_full;
+logic fir_lpr_out_full1, fir_lpr_out_full2, fir_lpr_out_full;
 
-logic [DATA_SIZE-1:0] lpr_out_dout;
-logic lpr_out_rd_en;
-logic lpr_out_empty;
+logic [DATA_SIZE-1:0] lpr_out_dout1, lpr_out_dout2;
+logic lpr_out_rd_en1, lpr_out_rd_en2;
+logic lpr_out_empty1, lpr_out_empty2;
+assign fir_lpr_out_full = fir_lpr_out_full1 || fir_lpr_out_full2;
+
+// assign lpr_out_rd_en = lpr_out_rd_en1 && lpr_out_rd_en2;
 
 // L+R low-pass FIR filter
 fir #(
@@ -251,9 +286,9 @@ fir #(
 ) fir_lpr_inst (
     .clock(clock),
     .reset(reset),
-    .x_in(demod_data_out),
-    .x_rd_en(demod_out_rd_en),
-    .x_empty(demod_out_empty),
+    .x_in(demod_data_out1),
+    .x_rd_en(demod_out_rd_en1),
+    .x_empty(demod_out_empty1),
     .y_out(fir_lpr_out_din),
     .y_out_full(fir_lpr_out_full),
     .y_wr_en(fir_lpr_out_wr_en)
@@ -261,17 +296,32 @@ fir #(
 
 fifo #(
     .FIFO_DATA_WIDTH(DATA_SIZE),
-    .FIFO_BUFFER_SIZE(16)
-) fifo_lpr_out_inst (
+    .FIFO_BUFFER_SIZE(128)
+) fifo_lpr_out_inst1 (
     .reset(reset),
     .wr_clk(clock),
     .wr_en(fir_lpr_out_wr_en),
     .din(fir_lpr_out_din),
-    .full(fir_lpr_out_full),
+    .full(fir_lpr_out_full1),
     .rd_clk(clock),
-    .rd_en(lpr_out_rd_en),
-    .dout(lpr_out_dout),
-    .empty(lpr_out_empty)
+    .rd_en(lpr_out_rd_en1),
+    .dout(lpr_out_dout1),
+    .empty(lpr_out_empty1)
+);
+
+fifo #(
+    .FIFO_DATA_WIDTH(DATA_SIZE),
+    .FIFO_BUFFER_SIZE(128)
+) fifo_lpr_out_inst2 (
+    .reset(reset),
+    .wr_clk(clock),
+    .wr_en(fir_lpr_out_wr_en),
+    .din(fir_lpr_out_din),
+    .full(fir_lpr_out_full2),
+    .rd_clk(clock),
+    .rd_en(lpr_out_rd_en2),
+    .dout(lpr_out_dout2),
+    .empty(lpr_out_empty2)
 );
 
 
@@ -304,9 +354,9 @@ fir #(
 ) fir_bp_lmr_inst (
     .clock(clock),
     .reset(reset),
-    .x_in(demod_data_out),
-    .x_rd_en(demod_out_rd_en),
-    .x_empty(demod_out_empty),
+    .x_in(demod_data_out2),
+    .x_rd_en(demod_out_rd_en2),
+    .x_empty(demod_out_empty2),
     .y_out(fir_bp_lmr_out_din),
     .y_out_full(fir_bp_lmr_out_full),
     .y_wr_en(fir_bp_lmr_out_wr_en)
@@ -314,7 +364,7 @@ fir #(
 
 fifo #(
     .FIFO_DATA_WIDTH(DATA_SIZE),
-    .FIFO_BUFFER_SIZE(16)
+    .FIFO_BUFFER_SIZE(128)
 ) fifo_bp_lmr_out_inst (
     .reset(reset),
     .wr_clk(clock),
@@ -341,11 +391,11 @@ parameter logic signed [0:BP_PILOT_COEFF_TAPS-1] [DATA_SIZE-1:0] BP_PILOT_COEFFS
 
 logic [DATA_SIZE-1:0] fir_pilot_bp_out_din;
 logic fir_pilot_bp_out_wr_en;
-logic fir_pilot_bp_out_full;
+logic fir_pilot_bp_out_full, fir_pilot_bp_out_full1, fir_pilot_bp_out_full2;
 
-logic [DATA_SIZE-1:0] fir_pilot_bp_out_dout;
-logic fir_pilot_bp_out_rd_en1, fir_pilot_bp_out_rd_en2, fir_pilot_bp_out_rd_en;
-logic fir_pilot_bp_out_empty;
+logic [DATA_SIZE-1:0] fir_pilot_bp_out_dout1, fir_pilot_bp_out_dout2;
+logic fir_pilot_bp_out_rd_en1, fir_pilot_bp_out_rd_en2;
+logic fir_pilot_bp_out_empty2, fir_pilot_bp_out_empty1;
 
 logic [DATA_SIZE-1:0] mult_pilot_bp_out;
 logic mult_pilot_bp_out_wr_en;
@@ -355,6 +405,7 @@ logic [DATA_SIZE-1:0] mult_pilot_out_dout;
 logic mult_pilot_out_rd_en;
 logic mult_pilot_out_empty;
 
+assign fir_pilot_bp_out_full = fir_pilot_bp_out_full1 || fir_pilot_bp_out_full2;
 // Pilot band-pass filter extracts the 19kHz pilot tone
 fir #(
     .TAPS(BP_PILOT_COEFF_TAPS),
@@ -364,9 +415,9 @@ fir #(
 ) fir_pilot_bp_inst (
     .clock(clock),
     .reset(reset),
-    .x_in(demod_data_out),
-    .x_rd_en(demod_out_rd_en),
-    .x_empty(demod_out_empty),
+    .x_in(demod_data_out3),
+    .x_rd_en(demod_out_rd_en3),
+    .x_empty(demod_out_empty3),
     .y_out(fir_pilot_bp_out_din),
     .y_out_full(fir_pilot_bp_out_full),
     .y_wr_en(fir_pilot_bp_out_wr_en)
@@ -374,20 +425,34 @@ fir #(
 
 fifo #(
     .FIFO_DATA_WIDTH(DATA_SIZE),
-    .FIFO_BUFFER_SIZE(16)
-) fifo_pilot_bp_out_inst (
+    .FIFO_BUFFER_SIZE(128)
+) fifo_pilot_bp_out_inst1 (
     .reset(reset),
     .wr_clk(clock),
     .wr_en(fir_pilot_bp_out_wr_en),
     .din(fir_pilot_bp_out_din),
-    .full(fir_pilot_bp_out_full),
+    .full(fir_pilot_bp_out_full1),
     .rd_clk(clock),
-    .rd_en(fir_pilot_bp_out_rd_en),
-    .dout(fir_pilot_bp_out_dout),
-    .empty(fir_pilot_bp_out_empty)
+    .rd_en(fir_pilot_bp_out_rd_en1),
+    .dout(fir_pilot_bp_out_dout1),
+    .empty(fir_pilot_bp_out_empty1)
 );
 
-assign fir_pilot_bp_out_rd_en = fir_pilot_bp_out_rd_en1 && fir_pilot_bp_out_rd_en2;
+fifo #(
+    .FIFO_DATA_WIDTH(DATA_SIZE),
+    .FIFO_BUFFER_SIZE(128)
+) fifo_pilot_bp_out_inst2 (
+    .reset(reset),
+    .wr_clk(clock),
+    .wr_en(fir_pilot_bp_out_wr_en),
+    .din(fir_pilot_bp_out_din),
+    .full(fir_pilot_bp_out_full2),
+    .rd_clk(clock),
+    .rd_en(fir_pilot_bp_out_rd_en2),
+    .dout(fir_pilot_bp_out_dout2),
+    .empty(fir_pilot_bp_out_empty2)
+);
+
 
 // square the pilot tone to get 38kHz
 multiply #(
@@ -396,13 +461,13 @@ multiply #(
     .clock(clock),
     .reset(reset),
 
-    .x(fir_pilot_bp_out_dout),
+    .x(fir_pilot_bp_out_dout1),
     .x_in_rd_en(fir_pilot_bp_out_rd_en1),
-    .x_in_empty(fir_pilot_bp_out_empty),
+    .x_in_empty(fir_pilot_bp_out_empty1),
 
-    .y(fir_pilot_bp_out_dout),
+    .y(fir_pilot_bp_out_dout2),
     .y_in_rd_en(fir_pilot_bp_out_rd_en2),
-    .y_in_empty(fir_pilot_bp_out_empty),
+    .y_in_empty(fir_pilot_bp_out_empty2),
 
     .mult_out(mult_pilot_bp_out),
     .out_wr_en(mult_pilot_bp_out_wr_en),
@@ -413,7 +478,7 @@ multiply #(
 
 fifo #(
     .FIFO_DATA_WIDTH(DATA_SIZE),
-    .FIFO_BUFFER_SIZE(16)
+    .FIFO_BUFFER_SIZE(128)
 ) fifo_mult_pilot_bp_out_inst (
     .reset(reset),
     .wr_clk(clock),
@@ -465,7 +530,7 @@ fir #(
 
 fifo #(
     .FIFO_DATA_WIDTH(DATA_SIZE),
-    .FIFO_BUFFER_SIZE(16)
+    .FIFO_BUFFER_SIZE(128)
 ) fifo_pilot_hp_out_inst (
     .reset(reset),
     .wr_clk(clock),
@@ -512,8 +577,8 @@ multiply #(
 
 fifo #(
     .FIFO_DATA_WIDTH(DATA_SIZE),
-    .FIFO_BUFFER_SIZE(16)
-) fifo_pilot_hp_out_inst (
+    .FIFO_BUFFER_SIZE(128)
+) fifo_pilot_mult_hp_out_inst (
     .reset(reset),
     .wr_clk(clock),
     .wr_en(mult_pilot_lmr_out_wr_en),
@@ -536,14 +601,16 @@ parameter logic signed [0:AUDIO_LMR_COEFF_TAPS-1] [DATA_SIZE-1:0] AUDIO_LMR_COEF
 };
 
 
-logic [DATA_SIZE-1:0] fir_lmr_out_wr_en;
+logic [DATA_SIZE-1:0] fir_lmr_out_din;
 logic fir_lmr_out_wr_en;
-logic fir_lmr_out_full;
+logic fir_lmr_out_full, fir_lmr_out_full1, fir_lmr_out_full2;
 
-logic [DATA_SIZE-1:0] lmr_out_dout;
-logic lmr_out_rd_en;
-logic lmr_out_empty;
+logic [DATA_SIZE-1:0] lmr_out_dout1, lmr_out_dout2;
+logic lmr_out_rd_en1, lmr_out_rd_en2;
+logic lmr_out_empty1, lmr_out_empty2;
+assign fir_lmr_out_full = fir_lmr_out_full1 || fir_lmr_out_full2;
 
+// assign lmr_out_rd_en = lmr_out_rd_en1 || lmr_out_rd_en2;
 
 
 // L-R low-pass FIR filter - reduce sampling rate from 256 KHz to 32 KHz
@@ -566,17 +633,33 @@ fir #(
 
 fifo #(
     .FIFO_DATA_WIDTH(DATA_SIZE),
-    .FIFO_BUFFER_SIZE(16)
-) fifo_lmr_out_inst (
+    .FIFO_BUFFER_SIZE(128)
+) fifo_lmr_out_inst1 (
     .reset(reset),
     .wr_clk(clock),
     .wr_en(fir_lmr_out_wr_en),
     .din(fir_lmr_out_din),
-    .full(fir_lmr_out_full),
+    .full(fir_lmr_out_full1),
     .rd_clk(clock),
-    .rd_en(lmr_out_rd_en),
-    .dout(lmr_out_dout),
-    .empty(lmr_out_empty)
+    .rd_en(lmr_out_rd_en1),
+    .dout(lmr_out_dout1),
+    .empty(lmr_out_empty1)
+);
+
+
+fifo #(
+    .FIFO_DATA_WIDTH(DATA_SIZE),
+    .FIFO_BUFFER_SIZE(128)
+) fifo_lmr_out_inst2 (
+    .reset(reset),
+    .wr_clk(clock),
+    .wr_en(fir_lmr_out_wr_en),
+    .din(fir_lmr_out_din),
+    .full(fir_lmr_out_full2),
+    .rd_clk(clock),
+    .rd_en(lmr_out_rd_en2),
+    .dout(lmr_out_dout2),
+    .empty(lmr_out_empty2)
 );
 
 
@@ -589,6 +672,7 @@ logic [DATA_SIZE-1:0] add_out_dout;
 logic add_out_rd_en;
 logic add_out_empty;
 
+
 // Left audio channel - (L+R) + (L-R) = 2L 
 add #(
     .DATA_SIZE(DATA_SIZE)
@@ -596,13 +680,13 @@ add #(
     .clock(clock),
     .reset(reset),
 
-    .lmr_in_dout(lmr_out_dout),
-    .lmr_in_empty(lmr_out_empty),
-    .lmr_in_rd_en(lmr_out_rd_en),
+    .lmr_in_dout(lmr_out_dout1),
+    .lmr_in_empty(lmr_out_empty1),
+    .lmr_in_rd_en(lmr_out_rd_en1),
 
-    .lpr_in_dout(lpr_out_dout),
-    .lpr_in_empty(lpr_out_empty),
-    .lpr_in_rd_en(lpr_out_rd_en),
+    .lpr_in_dout(lpr_out_dout1),
+    .lpr_in_empty(lpr_out_empty1),
+    .lpr_in_rd_en(lpr_out_rd_en1),
 
     .add_out_din(add_out),
     .add_out_wr_en(add_out_wr_en),
@@ -613,7 +697,7 @@ add #(
 
 fifo #(
     .FIFO_DATA_WIDTH(DATA_SIZE),
-    .FIFO_BUFFER_SIZE(16)
+    .FIFO_BUFFER_SIZE(128)
 ) fifo_add_out_inst (
     .reset(reset),
     .wr_clk(clock),
@@ -643,13 +727,13 @@ sub #(
     .clock(clock),
     .reset(reset),
 
-    .lmr_in_dout(lmr_out_dout),
-    .lmr_in_empty(lmr_out_empty),
-    .lmr_in_rd_en(lmr_out_rd_en),
+    .lmr_in_dout(lmr_out_dout2),
+    .lmr_in_empty(lmr_out_empty2),
+    .lmr_in_rd_en(lmr_out_rd_en2),
 
-    .lpr_in_dout(lpr_out_dout),
-    .lpr_in_empty(lpr_out_empty),
-    .lpr_in_rd_en(lpr_out_rd_en),
+    .lpr_in_dout(lpr_out_dout2),
+    .lpr_in_empty(lpr_out_empty2),
+    .lpr_in_rd_en(lpr_out_rd_en2),
 
     .sub_out_din(sub_out),
     .sub_out_wr_en(sub_out_wr_en),
@@ -660,7 +744,7 @@ sub #(
 
 fifo #(
     .FIFO_DATA_WIDTH(DATA_SIZE),
-    .FIFO_BUFFER_SIZE(16)
+    .FIFO_BUFFER_SIZE(128)
 ) fifo_sub_out_inst (
     .reset(reset),
     .wr_clk(clock),
@@ -710,7 +794,7 @@ iir #(
 
 fifo #(
     .FIFO_DATA_WIDTH(DATA_SIZE),
-    .FIFO_BUFFER_SIZE(16)
+    .FIFO_BUFFER_SIZE(128)
 ) fifo_iir_left_out_inst (
     .reset(reset),
     .wr_clk(clock),
@@ -752,7 +836,7 @@ iir #(
 
 fifo #(
     .FIFO_DATA_WIDTH(DATA_SIZE),
-    .FIFO_BUFFER_SIZE(16)
+    .FIFO_BUFFER_SIZE(128)
 ) fifo_iir_right_out_inst (
     .reset(reset),
     .wr_clk(clock),
@@ -810,7 +894,7 @@ gain #(
 //output data
 fifo #(
     .FIFO_DATA_WIDTH(DATA_SIZE),
-    .FIFO_BUFFER_SIZE(16)
+    .FIFO_BUFFER_SIZE(128)
 ) fifo_left_out_audio_inst (
     .reset(reset),
     .wr_clk(clock),
@@ -825,7 +909,7 @@ fifo #(
 
 fifo #(
     .FIFO_DATA_WIDTH(DATA_SIZE),
-    .FIFO_BUFFER_SIZE(16)
+    .FIFO_BUFFER_SIZE(128)
 ) fifo_right_out_audio_inst (
     .reset(reset),
     .wr_clk(clock),
