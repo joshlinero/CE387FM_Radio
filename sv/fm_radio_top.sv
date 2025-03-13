@@ -205,8 +205,8 @@ demodulate #(
     .demod_wr_en_out(demod_wr_en_out),
     .demod_out_full(demod_out_full)
 );
-
-fifo #(
+  // fifo for sub and add
+fifo #( 
     .FIFO_DATA_WIDTH(DATA_SIZE),
     .FIFO_BUFFER_SIZE(128)
 ) fifo_demodulate1_output (
@@ -221,10 +221,10 @@ fifo #(
     .empty(demod_out_empty1)
 );
 
-
+// fifo for band pass 
 fifo #(
     .FIFO_DATA_WIDTH(DATA_SIZE),
-    .FIFO_BUFFER_SIZE(128)
+    .FIFO_BUFFER_SIZE(1024)
 ) fifo_demodulate2_output (
     .reset(reset),
     .wr_clk(clock),
@@ -348,7 +348,7 @@ logic fir_lmr_out_empty;
 //  L-R band-pass FIR filter 
 fir #(
     .TAPS(BP_LMR_COEFF_TAPS),
-    .DECIMATION(8),
+    .DECIMATION(1),
     .DATA_SIZE(DATA_SIZE),
     .GLOBAL_COEFF(BP_LMR_COEFFS)
 ) fir_bp_lmr_inst (
@@ -364,7 +364,7 @@ fir #(
 
 fifo #(
     .FIFO_DATA_WIDTH(DATA_SIZE),
-    .FIFO_BUFFER_SIZE(128)
+    .FIFO_BUFFER_SIZE(1024)
 ) fifo_bp_lmr_out_inst (
     .reset(reset),
     .wr_clk(clock),
