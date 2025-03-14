@@ -106,7 +106,7 @@ module divider_work #(
                     reg_1_next = 0;
                     next_state = DONE;
                 end else if (reg_1_curr >= reg_2_curr) begin
-                    pos_next = get_msb(reg_1_curr, (DIVIDENT_WIDTH-1)) - get_msb(reg_2_curr, (DIVISOR_WIDTH-1));
+                    pos_next = get_msb(reg_1_curr, (DIVIDEND_WIDTH-1)) - get_msb(reg_2_curr, (DIVISOR_WIDTH-1));
                     next_state = COMPUTE;
                 end else begin
                     next_state = DONE;
