@@ -64,6 +64,7 @@ always_comb begin
     q_low_c = q_low;
     i_sample_c = i_sample;
     q_sample_c = q_sample;
+    next_state = state;
 
     case (state) 
         READ_I_LOW: begin

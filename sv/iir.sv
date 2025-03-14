@@ -86,9 +86,9 @@ always_comb begin
         INIT: begin
             if (x_empty == 1'b0) begin
                 x_rd_en = 1'b1;
-                x_c[1:DATA_SIZE-1] = x[0:DATA_SIZE-2];
+                x_c[1:TAPS-1] = x[0:TAPS-2];
                 x_c[0] = x_in;
-                y_c[1:DATA_SIZE-1] = y[0:DATA_SIZE-2];
+                y_c[1:TAPS-1] = y[0:TAPS-2];
 
                 count_c = (count + 1) % DECIMATION;
                 if (count == DECIMATION - 1) begin
