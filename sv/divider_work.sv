@@ -1,7 +1,8 @@
 module divider_work #(
     parameter DIVIDEND_WIDTH = 32,
     parameter DIVISOR_WIDTH  = 32
-)(
+)
+(
     input logic clock,
     input logic reset,
     input logic start,
@@ -13,22 +14,26 @@ module divider_work #(
     output logic done
 );
 
-    typedef enum logic [1:0] {
+    typedef enum logic [2:0] {
         INIT,
         CHECK,
-        COMPUTE,
-        DONE
+        FIND_MSB,
+        COMPUTE1,
+        COMPUTE2,
+        WRITE
     } state_t;
     state_t state, next_state;
 
-    logic [DIVIDEND_WIDTH-1:0] reg_1_curr, reg_1_next; 
-    logic [DIVIDEND_WIDTH-1:0] reg_quotient, reg_q_next;
-    logic [DIVISOR_WIDTH-1:0] reg_2_curr, reg_2_next;
-    logic [DIVISOR_WIDTH-1:0] reg_remainder, reg_r_next;
-    logic err_flag, err_flag_next;
-    logic done_flag, done_flag_next;
-    int pos, pos_next;
-    logic sign;
+    logic signed [DIVIDEND_WIDTH-1:0] reg_1_curr, reg_1_curr_c;
+    logic signed [DIVISOR_WIDTH-1:0] reg_2_curr, reg_2_curr_c;
+    logic signed [DIVIDEND_WIDTH-1:0] q, q_c;
+    logic signed [DIVIDEND_WIDTH-1:0] p, p_c, p_temp;
+    logic internal_sign;
+
+    logic [$clog2(DIVIDEND_WIDTH)-1:0] msb_a, msb_a_c;
+    logic [$clog2(DIVIDEND_WIDTH)-1:0] msb_b, msb_b_c;
+
+    logic signed [DIVIDEND_WIDTH-1:0] remainder_condition;
 
     function automatic logic [$clog2(DIVIDEND_WIDTH)-1:0] get_msb(logic [DIVIDEND_WIDTH-1:0] val, logic [$clog2(DIVIDEND_WIDTH)-1:0] msb);
         logic [$clog2(DIVIDEND_WIDTH)-1:0] left;
@@ -49,104 +54,117 @@ module divider_work #(
             end else begin
                 return 1'b0;
             end
-        end 
+        end
     endfunction
 
     always_ff @(posedge clock or posedge reset) begin
         if (reset) begin
             reg_1_curr <= 0;
             reg_2_curr <= 0;
-            reg_quotient <= 0;
-            reg_remainder <= 0;
-            err_flag <= 0;
-            pos <= 0;
-            done_flag <= 0;
+            q <= 0;
+            p <= 0;
+            msb_a <= 0;
+            msb_b <= 0;
             state <= INIT;
         end else begin
-            reg_1_curr <= reg_1_next;
-            reg_2_curr <= reg_2_next;
-            reg_quotient <= reg_q_next;
-            reg_remainder <= reg_r_next;
-            err_flag <= err_flag_next;
-            done_flag <= done_flag_next;
+            reg_1_curr <= reg_1_curr_c;
+            reg_2_curr <= reg_2_curr_c;
+            q <= q_c;
+            p <= p_c;
+            msb_a <= msb_a_c;
+            msb_b <= msb_b_c;
             state <= next_state;
-            pos <= pos_next;
         end
     end
 
     always_comb begin
-        reg_1_next = reg_1_curr;
-        reg_2_next = reg_2_curr;
-        reg_q_next = reg_quotient;
-        reg_r_next = reg_remainder;
-        err_flag_next = err_flag;
-        pos_next = pos;
-        done_flag_next = done_flag;
         next_state = state;
-        sign = 0;
+        reg_1_curr_c = reg_1_curr;
+        reg_2_curr_c = reg_2_curr;
+        q_c = q;
+        p_c = p;
+        msb_a_c = msb_a;
+        msb_b_c = msb_b;
+        done = 0;
+        quotient = 0;
+        remainder = 0;
+        error = 0;
 
         case (state)
+
             INIT: begin
-                done_flag_next = 0;
                 if (start) begin
-                    reg_1_next = (numerator[DIVIDEND_WIDTH-1] ? ~numerator + 1'b1 : numerator);
-                    reg_2_next = (denominator[DIVISOR_WIDTH-1] ? ~denominator + 1'b1 : denominator);
-                    reg_q_next = 0;
-                    err_flag_next = 0;
-                    next_state = CHECK;
+                    error = 0;
+                    reg_1_curr_c = (numerator[DIVIDEND_WIDTH-1] == 1'b0) ? numerator : -numerator;
+                    reg_2_curr_c = (denominator[DIVISOR_WIDTH-1] == 1'b0) ? denominator : -denominator;
+                    q_c = '0;
+                    p_c = '0;
+                    if (denominator == 1) begin
+                        next_state = CHECK;
+                    end else if (denominator == 0) begin
+                        error = 1;
+                        next_state = CHECK;
+                    end else begin
+                        next_state = FIND_MSB;
+                    end
+                end else begin
+                    next_state = INIT;
                 end
             end
 
             CHECK: begin
-                if (reg_2_curr == 0) begin
-                    err_flag_next = 1;
-                    next_state = DONE;
-                end else if (reg_2_curr == 1) begin
-                    reg_q_next = reg_1_curr;
-                    reg_1_next = 0;
-                    next_state = DONE;
-                end else if (reg_1_curr >= reg_2_curr) begin
-                    pos_next = get_msb(reg_1_curr, (DIVIDEND_WIDTH-1)) - get_msb(reg_2_curr, (DIVISOR_WIDTH-1));
-                    next_state = COMPUTE;
+                q_c = numerator;
+                reg_1_curr_c = 1'b0;
+                reg_2_curr_c = reg_2_curr;
+                next_state = WRITE;
+            end
+
+            FIND_MSB: begin
+                msb_a_c = get_msb(reg_1_curr, (DIVIDEND_WIDTH-1));
+                msb_b_c = get_msb(reg_2_curr, (DIVISOR_WIDTH-1));
+                next_state = COMPUTE1;
+            end
+
+            COMPUTE1: begin
+                p_temp = msb_a - msb_b;
+                p_c = ((reg_2_curr << p_temp) > reg_1_curr) ? p_temp - 1 : p_temp;
+                next_state = COMPUTE2;
+            end
+
+            COMPUTE2: begin
+                q_c = q + (1 << p);
+                if ((reg_2_curr != 1'b0) && (reg_2_curr <= reg_1_curr)) begin
+                    reg_1_curr_c = reg_1_curr - (reg_2_curr << p);
+                    next_state = FIND_MSB;
                 end else begin
-                    next_state = DONE;
+                    next_state = WRITE;
                 end
             end
 
-            COMPUTE: begin
-                if ((reg_2_curr << pos) > reg_1_curr) begin
-                    pos_next = pos - 1;
-                end else begin
-                    pos_next = pos;
-                end
-                reg_q_next = reg_quotient + (1 << pos_next);
-                reg_1_next = reg_1_curr - (reg_2_curr << pos_next);
-                next_state = CHECK;
-            end
-
-            DONE: begin
-                sign = numerator[DIVIDEND_WIDTH-1] ^ denominator[DIVISOR_WIDTH-1];
-                reg_q_next = sign ? ~reg_quotient + 1'b1 : reg_quotient;
-                reg_r_next = numerator[DIVIDEND_WIDTH-1] ? ~reg_1_curr + 1'b1 : reg_1_curr;
-                done_flag_next = 1;
+            WRITE: begin
+                internal_sign = numerator[DIVIDEND_WIDTH-1] ^ denominator[DIVISOR_WIDTH-1];
+                quotient = (internal_sign == 1'b0) ? q : -q;
+                remainder_condition = numerator[DIVIDEND_WIDTH-1];
+                remainder = (remainder_condition == 1'b0) ? reg_1_curr : -reg_1_curr;
+                done = 1;
                 next_state = INIT;
             end
 
             default: begin
-                reg_1_next = 'x;
-                reg_2_next = 'x;
-                reg_q_next = 'x;
-                reg_r_next = 'x;
-                err_flag_next = 'x;
-                done_flag_next = 'x;
+                reg_1_curr_c = 'x;
+                reg_2_curr_c = 'x;
+                q_c = 'x;
+                p_c = 'x;
+                msb_a_c = 'x;
+                msb_b_c = 'x;
+                quotient = 'x;
+                remainder = 'x;
+                error = 'x;
+                done = 'x;
                 next_state = INIT;
-                pos_next = pos;
             end
+
         endcase
     end
 
-    assign quotient = reg_quotient;
-    assign remainder = reg_remainder;
-    assign error = err_flag;
-    assign done = done_flag;
 endmodule
