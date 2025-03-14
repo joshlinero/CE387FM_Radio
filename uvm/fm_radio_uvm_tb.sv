@@ -18,7 +18,7 @@ module fm_radio_uvm_tb;
         .reset(vif.reset),
         .in_full(vif.in_full),
         .in_wr_en(vif.in_wr_en),
-        .in_din(vif.data_in),
+        .in_din(vif.in_din),
         .left_audio_out_empty(vif.left_audio_out_empty),
         .right_audio_out_empty(vif.right_audio_out_empty),
         .left_audio_out_rd_en(vif.left_audio_out_rd_en),
@@ -27,7 +27,6 @@ module fm_radio_uvm_tb;
         .right_audio_out_data(vif.right_audio_out_data),
         .volume(vif.volume)
     );
-    vif.volume = VOLUME;
 
     initial begin
         // store the vif so it can be retrieved by the driver & monitor
@@ -44,6 +43,7 @@ module fm_radio_uvm_tb;
         vif.reset <= 1'b0;
         @(posedge vif.clock);
         vif.reset <= 1'b1;
+        vif.volume <= VOLUME;
         @(posedge vif.clock);
         vif.reset <= 1'b0;
     end

@@ -27,7 +27,7 @@ class fm_radio_uvm_driver extends uvm_driver#(fm_radio_uvm_transaction);
         @(posedge vif.reset)
         @(negedge vif.reset)
 
-        vif.data_in = 8'b0;
+        vif.in_din = 8'b0;
         vif.in_wr_en = 1'b0;
 
         forever begin
@@ -35,12 +35,12 @@ class fm_radio_uvm_driver extends uvm_driver#(fm_radio_uvm_transaction);
             begin                
                 if (vif.in_full == 1'b0) begin
                     seq_item_port.get_next_item(tx);
-                    vif.data_in = tx.data_in;
+                    vif.in_din = tx.data_in;
                     vif.in_wr_en = 1'b1;
                     seq_item_port.item_done();
                 end else begin
                     vif.in_wr_en = 1'b0;
-                    vif.data_in = 8'b0;
+                    vif.in_din = 8'b0;
                 end
             end
         end

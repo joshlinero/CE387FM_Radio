@@ -3,8 +3,8 @@ import uvm_pkg::*;
 
 class fm_radio_uvm_transaction extends uvm_sequence_item;
     logic signed [7:0] data_in;
-    logic signed [31:0] left_audio_out_data;
-    logic signed [31:0] right_audio_out_data;
+    logic signed [31:0] audio_left_output;
+    logic signed [31:0] audio_right_output;
 
     function new(string name = "");
         super.new(name);
@@ -12,8 +12,8 @@ class fm_radio_uvm_transaction extends uvm_sequence_item;
 
     `uvm_object_utils_begin(fm_radio_uvm_transaction)
     `uvm_field_int(data_in, UVM_ALL_ON)
-    `uvm_field_int(left_audio_out_data, UVM_ALL_ON)
-    `uvm_field_int(right_audio_out_data, UVM_ALL_ON)
+    `uvm_field_int(audio_left_output, UVM_ALL_ON)
+    `uvm_field_int(audio_right_output, UVM_ALL_ON)
     `uvm_object_utils_end
 endclass: fm_radio_uvm_transaction
 
@@ -30,11 +30,11 @@ class fm_radio_uvm_sequence extends uvm_sequence#(fm_radio_uvm_transaction);
         int i, j;
         logic [7:0] data;
 
-        `uvm_info("SEQ_RUN", $sformatf("Loading file %s...", FILE_IN_FILE), UVM_LOW);
+        `uvm_info("SEQ_RUN", $sformatf("Loading file %s...", FILE_IN_NAME), UVM_LOW);
 
-        in_file = $fopen(FILE_IN_FILE, "rb");
+        in_file = $fopen(FILE_IN_NAME, "rb");
         if ( !in_file ) begin
-            `uvm_fatal("SEQ_RUN", $sformatf("Failed to open file %s...", FILE_IN_FILE));
+            `uvm_fatal("SEQ_RUN", $sformatf("Failed to open file %s...", FILE_IN_NAME));
         end
 
         i = 0;
@@ -48,7 +48,7 @@ class fm_radio_uvm_sequence extends uvm_sequence#(fm_radio_uvm_transaction);
             finish_item(tx);
             i++;
         end
-    `uvm_info("SEQ_RUN", $sformatf("Closing file %s...", FILE_IN_FILE), UVM_LOW);
+    `uvm_info("SEQ_RUN", $sformatf("Closing file %s...", FILE_IN_NAME), UVM_LOW);
     $fclose(in_file);
     endtask: body
 endclass: fm_radio_uvm_sequence

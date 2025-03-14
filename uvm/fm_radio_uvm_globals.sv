@@ -14,6 +14,7 @@ localparam BYTE_SIZE = 8;
 localparam DATA_SIZE = 32;
 
 parameter CHANNEL_COEFF_TAPS = 20;
+parameter IIR_COEFF_TAPS = 2;
 
 parameter logic signed [0:CHANNEL_COEFF_TAPS-1] [DATA_SIZE-1:0] CHANNEL_COEFFICIENTS_REAL = '{
     32'h00000001, 32'h00000008, 32'hfffffff3, 32'h00000009, 32'h0000000b, 32'hffffffd3, 32'h00000045, 32'hffffffd3, 

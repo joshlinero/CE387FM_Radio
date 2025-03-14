@@ -33,9 +33,14 @@ class fm_radio_uvm_monitor_output extends uvm_monitor;
     virtual task run_phase(uvm_phase phase);
         fm_radio_uvm_transaction tx_out;
         int left_out, right_out;
+        int num_outputs_written;
+
+        phase.raise_objection(.obj(this));
         // wait for reset
         @(posedge vif.reset)
         @(negedge vif.reset)
+
+        num_outputs_written = 0;
 
         tx_out = fm_radio_uvm_transaction::type_id::create(.name("tx_out"), .contxt(get_full_name()));
 
@@ -50,11 +55,15 @@ class fm_radio_uvm_monitor_output extends uvm_monitor;
                     right_out = vif.right_audio_out_data;
                     $fwrite(left_out_file, "%x\n",left_out);
                     $fwrite(right_out_file, "%x\n",right_out);
+                    num_outputs_written++;
                     tx_out.audio_left_output = vif.left_audio_out_data;
                     tx_out.audio_right_output = vif.right_audio_out_data;
                     mon_ap_output.write(tx_out);
                     vif.left_audio_out_rd_en = 1'b1;
                     vif.right_audio_out_rd_en = 1'b1;
+                    if (num_outputs_written >= 1000) begin
+                        phase.drop_objection(.obj(this));
+                    end
                 end else begin
                     vif.left_audio_out_rd_en = 1'b0;
                     vif.right_audio_out_rd_en = 1'b0;
