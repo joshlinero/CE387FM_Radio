@@ -1,6 +1,8 @@
 source/test/usrp.dat
 sim/*
 !sim/**/*.do
+!sim/**/*.questa
+!sim/**/run_uvm_simulation
 synth/*
 stdout.log
 ~$387_Final_Report.docx
