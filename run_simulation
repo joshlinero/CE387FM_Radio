@@ -1,0 +1,3 @@
+#!/bin/csh
+cd sim
+./run_simulation

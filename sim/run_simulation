@@ -1,3 +1,4 @@
+#!/bin/csh
 source /vol/eecs392/env/questasim.env
 mkdir -p lib
 cp $UVM_HOME/examples/Makefile.questa .
