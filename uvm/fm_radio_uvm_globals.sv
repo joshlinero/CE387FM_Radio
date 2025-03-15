@@ -2,7 +2,7 @@
 `define __GLOBALS__
 
 // UVM Globals
-localparam string FILE_IN_NAME = "../source/test/usrp.dat";
+localparam string FILE_IN_NAME = "../source/test/input.txt";
 localparam string FILE_LEFT_CMP_NAME = "../source/src/txt_files/left_audio.txt";
 localparam string FILE_RIGHT_CMP_NAME = "../source/src/txt_files/right_audio.txt";
 localparam string FILE_LEFT_OUT_NAME = "../source/src/out_files/left_audio_out.txt";

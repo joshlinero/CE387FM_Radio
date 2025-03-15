@@ -4,6 +4,7 @@
 module fm_radio_tb;
 
 localparam string FILE_IN_NAME = "../source/test/usrp.dat";
+localparam string FILE_INPUT_TXT_NAME = "../source/test/input.txt";
 localparam string FILE_LEFT_CMP_NAME = "../source/src/txt_files/left_audio.txt";
 localparam string FILE_RIGHT_CMP_NAME = "../source/src/txt_files/right_audio.txt";
 localparam string FILE_LEFT_OUT_NAME = "../source/src/out_files/left_audio_out.txt";
@@ -87,12 +88,18 @@ initial begin : tb_process
 end
 
 initial begin : read_data_process
-    int in_file;
+    int in_file, input_txt_file;
     int i;
+    logic signed [7:0] data_from_file;
     @(negedge reset);
     $display("@ %0t: Loading file %s...", $time, FILE_IN_NAME);
     in_file = $fopen(FILE_IN_NAME, "rb");
     if (!in_file) $fatal("@ %0t: FAILED TO LOAD FILE %s...", $time, FILE_IN_NAME);
+    
+    $display("@ %0t: Opening file %s for writing...", $time, FILE_INPUT_TXT_NAME);
+    input_txt_file = $fopen(FILE_INPUT_TXT_NAME, "wb");
+    if (!input_txt_file) $fatal("@ %0t: FAILED TO OPEN FILE %s...", $time, FILE_INPUT_TXT_NAME);
+    
     in_wr_en = 1'b0;
     @(negedge clock);
     i = 0;
@@ -100,13 +107,16 @@ initial begin : read_data_process
         @(negedge clock);
         if (!in_full) begin
             in_wr_en = 1'b1;
-            void'($fscanf(in_file, "%c", data_in));
+            void'($fscanf(in_file, "%c", data_from_file));
+            data_in = data_from_file;
+            $fwrite(input_txt_file, "%c", data_from_file);
             i++;
         end else in_wr_en = 1'b0;
     end
     @(negedge clock);
     in_wr_en = 1'b0;
     $fclose(in_file);
+    $fclose(input_txt_file);
     in_write_done = 1'b1;
 end
 
